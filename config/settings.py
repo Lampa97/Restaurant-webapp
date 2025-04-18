@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -102,7 +103,6 @@ CSRF_TRUSTED_ORIGINS = [
     f"http://{os.getenv("SERVER_IP")}",
     f"https://{os.getenv("SERVER_IP")}",
 ]
-
 
 
 # Internationalization
