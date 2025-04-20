@@ -4,16 +4,18 @@ from users.models import User
 
 
 class Table(models.Model):
-    HALL = "Hall"
-    BANQUET = "Banquet"
+    TWO = 2
+    FOUR = 4
+    SIX = 6
+    EIGHT = 8
+    TEN = 10
 
-    LOCATION_CHOICES = [(HALL, "Hall"), (BANQUET, "Banquet")]
+    CAPACITY_CHOICES = [(TWO, 2), (FOUR, 4), (SIX, 6), (EIGHT, 8), (TEN, 10)]
 
     number = models.SmallIntegerField(unique=True, verbose_name="Table Number")
     capacity = models.SmallIntegerField(
-        verbose_name="Capacity", validators=[MinValueValidator(2), MaxValueValidator(20)]
+        verbose_name="Capacity", choices=CAPACITY_CHOICES
     )
-    location = models.CharField(max_length=100, choices=LOCATION_CHOICES, verbose_name="Location")
 
     class Meta:
         verbose_name = "Table"
@@ -21,7 +23,7 @@ class Table(models.Model):
         ordering = ["number"]
 
     def __str__(self):
-        return f"Table {self.number} - {self.location}. Capacity: {self.capacity}"
+        return f"Table {self.number} - Capacity: {self.capacity}"
 
 
 class Reservation(models.Model):

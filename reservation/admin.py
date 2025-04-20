@@ -5,9 +5,9 @@ from .models import Table, Reservation
 
 @admin.register(Table)
 class CategoryTable(admin.ModelAdmin):
-    list_display = ("number", "capacity", "location")
-    search_fields = ("number", "capacity", "location")
-    list_filter = ("location", "capacity",)
+    list_display = ("number", "capacity")
+    search_fields = ("number", "capacity")
+    list_filter = ("capacity",)
 
 @admin.register(Reservation)
 class CategoryReservation(admin.ModelAdmin):
