@@ -5,13 +5,15 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
+
 <figure class="text-center text-light">
+
     <h1 class="display-3 fw-bold text-uppercase text-warning">
-        Welcome to Buffalo SteakHouse
+        Welcome to Iron Hoof SteakHouse
     </h1>
     <h2 class="display-5 text-info fst-italic">Where Quality Meets Craft</h2>
     <p class="lead mt-4">
-        Nestled in the heart of the countryside, just steps away from our very own farm, Buffalo SteakHouse is more than just a place to eat — it's a celebration of bold flavors, fresh ingredients, and honest craftsmanship.
+        Nestled in the heart of the countryside, just steps away from our very own farm, Iron Hoof SteakHouse is more than just a place to eat — it's a celebration of bold flavors, fresh ingredients, and honest craftsmanship.
     </p>
     <p class="fs-5">
         We specialize in premium beef, bringing you mouthwatering steaks, juicy burgers, and chef-inspired creations, all made from locally raised, farm-fresh meat. Our commitment to quality starts at the source, with every cut hand-selected and prepared to perfection.
@@ -22,6 +24,47 @@
     <p class="fw-light">
         Whether you're here for a casual bite, a special dinner, or a drink with friends, you'll find warm hospitality, rustic charm, and a true farm-to-table experience.
     </p>
-    <h3 class="text-success mt-5">Come hungry. Leave happy.</h3>
+    <h3 class="text-warning mt-5">Come hungry. Leave happy.</h3>
+<hr style="border: 5px solid white; margin: 20px 0;">
+<h2 class="display-5 text-info fst-italic text-center">We're happy to introduce you to our services</h2>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
+  <div class="col">
+    <div class="card bg-dark text-light h-100">
+        <img src="{% static 'images/menu.png' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h5 class="card-title">Menu</h5>
+        <p class="card-text">Explore our diverse menu featuring premium steaks, burgers, and more.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card bg-dark text-light h-100">
+        <img src="{% static 'images/banquet.avif' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h5 class="card-title">Banquet</h5>
+        <p class="card-text">Host your special events with our tailored banquet services.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card bg-dark text-light h-100">
+        <img src="{% static 'images/delivery.png' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h5 class="card-title">Food Delivery</h5>
+        <p class="card-text">Enjoy our delicious meals delivered straight to your door.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card bg-dark text-light h-100">
+        <img src="{% static 'images/tour.png' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h5 class="card-title">Guided Farm Tour</h5>
+        <p class="card-text">Take a guided tour of our farm and experience the source of our quality.</p>
+      </div>
+    </div>
+  </div>
+</div>
 </figure>
+
 {% endblock %}
