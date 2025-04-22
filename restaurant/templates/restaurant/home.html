@@ -4,70 +4,125 @@
 
 {% block title %} Home {% endblock %}
 
+
+{% block header %}
+    <header class="bg-dark text-light text-center py-5">
+        <h1 class="display-4">Welcome to Our Restaurant</h1>
+        <p class="lead">Experience the best dining with us!</p>
+    </header>
+{% endblock %}
+
 {% block content %}
 
 <figure class="text-center text-light">
-
-    <h1 class="display-3 fw-bold text-uppercase text-warning">
+        <h1 class="display-3 fw-bold text-uppercase text-warning">
         Welcome to Iron Hoof SteakHouse
     </h1>
     <h2 class="display-5 text-info fst-italic">Where Quality Meets Craft</h2>
 
-    <p class="lead mt-4">
-        Nestled in the heart of the countryside, just steps away from our very own farm, Iron Hoof SteakHouse is more than just a place to eat — it's a celebration of bold flavors, fresh ingredients, and honest craftsmanship.
-    </p>
-    <p class="fs-5">
-        We specialize in premium beef, bringing you mouthwatering steaks, juicy burgers, and chef-inspired creations, all made from locally raised, farm-fresh meat. Our commitment to quality starts at the source, with every cut hand-selected and prepared to perfection.
-    </p>
-    <p class="fst-italic">
-        Complement your meal with a curated selection of craft beers, fine wines, and signature cocktails — or choose from a range of non-alcoholic drinks to suit any taste.
-    </p>
-    <p class="fw-light">
-        Whether you're here for a casual bite, a special dinner, or a drink with friends, you'll find warm hospitality, rustic charm, and a true farm-to-table experience.
-    </p>
-    <h3 class="text-warning mt-5">Come hungry. Leave happy.</h3>
-<hr style="border: 5px solid white; margin: 20px 0;">
-<h2 class="display-5 text-info fst-italic text-center">We're happy to introduce you to our services</h2>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
-  <div class="col">
-    <div class="card bg-dark text-light h-100">
-        <img src="{% static 'images/menu.png' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h5 class="card-title">Menu</h5>
-        <p class="card-text">Explore our diverse menu featuring premium steaks, burgers, and more.</p>
-      </div>
-    </div>
+<div id="carouselExampleCaptions" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
-  <div class="col">
-    <div class="card bg-dark text-light h-100">
-        <img src="{% static 'images/banquet.avif' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h5 class="card-title">Banquet</h5>
-        <p class="card-text">Host your special events with our tailored banquet services.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card bg-dark text-light h-100">
-        <img src="{% static 'images/delivery.png' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h5 class="card-title">Food Delivery</h5>
-        <p class="card-text">Enjoy our delicious meals delivered straight to your door.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card bg-dark text-light h-100">
-        <img src="{% static 'images/tour.png' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h5 class="card-title">Guided Farm Tour</h5>
-        <p class="card-text">Take a guided tour of our farm and experience the source of our quality.</p>
-      </div>
-    </div>
-  </div>
-</div>
-</figure>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'images/farm.png' %}" class="d-block" alt="..." style="width: 70%; height: auto; margin: 0 auto; opacity:0.8;">
 
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second slide label</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third slide label</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+    <h3 class="text-warning mt-5">Come hungry. Leave happy.</h3>
+    <hr style="border: 5px solid white; margin: 20px 0;">
+    <h2 class="display-5 text-info fst-italic text-center">We're happy to introduce you to our services</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
+        <div class="col">
+            <div class="card bg-dark text-light h-100">
+                <img src="{% static 'images/menu.png' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Menu</h5>
+                    <p class="card-text">Explore our diverse menu featuring premium steaks, burgers, and more.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-dark text-light h-100">
+                <img src="{% static 'images/banquet.avif' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Banquet</h5>
+                    <p class="card-text">Host your special events with our tailored banquet services.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-dark text-light h-100">
+                <img src="{% static 'images/delivery.png' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Food Delivery</h5>
+                    <p class="card-text">Enjoy our delicious meals delivered straight to your door.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-dark text-light h-100">
+                <img src="{% static 'images/tour.png' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Guided Farm Tour</h5>
+                    <p class="card-text">Take a guided tour of our farm and experience the source of our quality.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</figure>
+<h2 class="display-5 text-info fst-italic text-center">Please leave your feedback!</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" action="{% url 'restaurant:review-create' %}" class="bg-dark p-4 rounded">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ review_form.name.label_tag }}
+                    {{ review_form.name }}
+                </div>
+                <div class="mb-3">
+                    {{ review_form.review_text.label_tag }}
+                    {{ review_form.review_text }}
+                </div>
+                <div class="mb-3">
+                    {{ review_form.rating.label_tag }}
+
+                        {{ review_form.rating }}
+
+
+                    </div>
+
+                <button type="submit" class="btn btn-primary w-100">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}
