@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Personnel, Service
+from .models import Personnel, Service, Review
 
 
 @admin.register(Personnel)
@@ -12,3 +12,11 @@ class CategoryPersonnel(admin.ModelAdmin):
 class CategoryService(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
+
+
+@admin.register(Review)
+class CategoryReview(admin.ModelAdmin):
+    list_display = ("name", "rating", "date")
+    search_fields = ("name", "rating", "date")
+    list_filter = ("rating",)
+    ordering = ("date",)

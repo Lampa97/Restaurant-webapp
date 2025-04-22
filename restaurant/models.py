@@ -29,3 +29,18 @@ class Personnel(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.position}"
+
+
+class Review(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Reviewer Name")
+    review_text = models.TextField(verbose_name="Review Text")
+    rating = models.IntegerField(verbose_name="Rating")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="Review Date")
+
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = "Reviews"
+        ordering = ["-date"]
+
+    def __str__(self):
+        return f"{self.name} - {self.rating}"
