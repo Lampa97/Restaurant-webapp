@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} {% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
 
 </head>
 <body class="bg-image d-flex flex-column vh-100" style="background-image: url('/static/images/background.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
@@ -18,3 +18,9 @@
 <script type="text/javascript" src="/static/js/bootstrap.bundle.js"></script>
 </body>
 </html>
+
+<style>
+    html {
+  scroll-padding-top: 175px; /* Adjust this value to match your sticky header's height */
+}
+</style>

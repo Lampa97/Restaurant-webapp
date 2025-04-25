@@ -13,6 +13,10 @@ class HomeView(TemplateView):
         return context
 
 
+class AboutView(TemplateView):
+    template_name = "restaurant/about.html"
+
+
 class ReviewCreateView(CreateView):
     model = Review
     form_class = ReviewForm

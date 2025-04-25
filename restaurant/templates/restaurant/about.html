@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3 bg-dark text-light border-top border-bottom sticky-top" style="top: 125px;" data-bs-theme="dark">
+  <ul class="nav nav-pills bg-dark d-flex justify-content-between w-100">
+      <li class="nav-item col-4 text-center">
+        <a class="nav-link text-light fst-italic " href="#scrollspyHeading1">Iron Hoof History</a>
+      </li>
+      <li class="nav-item col-4 text-center">
+        <a class="nav-link mx-auto text-light fst-italic" href="#scrollspyHeading2">Mission and Values</a>
+      </li>
+      <li class="nav-item ms-auto col-4 text-center">
+        <a class="nav-link text-light fst-italic" href="#scrollspyHeading3">Our team</a>
+      </li>
+  </ul>
+</nav>
+<div data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-dark text-light p-3 rounded-2" tabindex="0">
+  <h4 id="scrollspyHeading1" class="text-center display-5 text-warning fst-italic">Iron Hoof History</h4>
+  <p class="text-center">Iron Hoof SteakHouse began in 1977 as a small, family-run venture — just a modest kitchen and a herd of cattle grazing on the hills behind the house. Nestled deep in the countryside, we started raising our own Angus and Hereford cattle, committed to quality from the very beginning.
+
+The name Iron Hoof was inspired by those early days. Our founder often said, “Every hoof that walks this farm carries the weight of our future.” The "iron" reflects the grit, resilience, and hard work poured into both the land and the kitchen — a name forged from the soul of our operation.
+
+What started as a simple countryside grill has grown into a modern steakhouse serving over 15,000 guests each year. We still raise our own cattle on over 200 acres of pasture, age our beef on-site for 21–28 days, and hand-cut each steak in-house.
+
+Today, Iron Hoof remains rooted in authenticity — bold flavors, farm-fresh meat, and a team that treats every plate like it’s part of something bigger: a legacy.</p>
+  <h4 id="scrollspyHeading2" class="text-center display-5 text-warning fst-italic">Mission and Values</h4>
+  <p class="text-center">At Iron Hoof SteakHouse, our mission is to serve unforgettable, farm-fresh beef with bold flavor and honest craftsmanship. From pasture to plate, we are committed to transparency, sustainability, and exceptional taste — creating an experience that brings people together around quality food and genuine hospitality.
+  1. Farm First
+We believe the best flavor starts at the source. That’s why we raise our own cattle and hand-select every cut from our family farm just steps away from our kitchen.
+
+2. Craft Over Convenience
+Every steak we serve is trimmed, seasoned, and cooked with care — no shortcuts, no compromises. We honor the art of butchery and the skill of our chefs in everything we do.
+
+3. Taste With Integrity
+We’re transparent about where our food comes from and how it’s made. Locally raised, responsibly sourced, and always fresh — that’s our promise.
+
+4. Guest-Centered Hospitality
+Every plate is personal. Whether it’s your first visit or your fiftieth, we aim to deliver warm, attentive service that makes you feel right at home.
+
+5. Legacy & Innovation
+Rooted in tradition, driven by progress. We honor our 1977 roots while embracing new flavors, techniques, and ideas that elevate the steakhouse experience.</p>
+  <h4 id="scrollspyHeading3" class="text-center display-5 text-warning fst-italic">Our team</h4>
+  <p class="text-center">Meet the Team Behind the Flavor
+At Iron Hoof SteakHouse, we believe great food starts with great people. Our team is a tight-knit crew of chefs, farmers, butchers, and hospitality professionals — each one bringing passion, skill, and personality to the table.
+
+From the fields where our cattle are raised to the kitchen where our steaks are perfected, every member of the Iron Hoof family plays a vital role in delivering the experience you know and love.
+    Key Team Members
+👨‍🍳 Chef Luca Reynolds – Executive Chef
+A classically trained chef with a love for bold flavors and wood-fired perfection, Luca leads our kitchen with creativity and precision. His signature dry-aged tomahawk is a guest favorite.
+
+👩‍🌾 Sarah Monroe – Farm Operations Lead
+Born and raised on the family farm, Sarah oversees the daily care of our cattle. Her commitment to ethical, sustainable farming is at the heart of our farm-to-table mission.
+
+🔪 Marcus Doyle – Head Butcher
+With over 20 years of experience, Marcus hand-selects and prepares every cut served in our restaurant. He’s known for turning butchery into an art form.
+
+🙋‍♀️ Emily Carter – Guest Experience Manager
+Emily brings warmth and attention to every table. Whether it’s a romantic dinner or a group celebration, she makes sure every guest feels like part of the Iron Hoof family.
+</p>
+</div>
+
+<style>
+.nav-link {
+  transition: background-color 0.2s, color 0.2s; /* Smooth transition for color changes */
+}
+
+.nav-link:focus, .nav-link:active, .nav-link:hover .nav-link.active {
+  background-color: white !important;
+  color: black !important;
+}
+
+</style>
+
+{% endblock %}
+
+
+

@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from users.models import User
@@ -16,6 +17,7 @@ class Table(models.Model):
     capacity = models.SmallIntegerField(
         verbose_name="Capacity", choices=CAPACITY_CHOICES
     )
+    is_reserved = models.BooleanField(default=False, verbose_name="Is Reserved")
 
     class Meta:
         verbose_name = "Table"
@@ -32,7 +34,7 @@ class Reservation(models.Model):
     start_time = models.TimeField(verbose_name="Start Time")
     end_time = models.TimeField(verbose_name="End Time")
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reservations", verbose_name="Customer")
-    total_persons = models.PositiveIntegerField(verbose_name="Total Persons", validators=[MinValueValidator(1)])
+    total_persons = models.PositiveIntegerField(verbose_name="Total Persons", validators=[MinValueValidator(1), MaxValueValidator(10)])
 
     class Meta:
         verbose_name = "Reservation"
