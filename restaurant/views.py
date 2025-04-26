@@ -10,12 +10,17 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['review_form'] = ReviewForm()
-        context['personnel'] = Personnel.objects.all()
+        context['services'] = Service.objects.all()
         return context
 
 
 class AboutView(TemplateView):
     template_name = "restaurant/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['personnel'] = Personnel.objects.all()
+        return context
 
 
 class ReviewCreateView(CreateView):

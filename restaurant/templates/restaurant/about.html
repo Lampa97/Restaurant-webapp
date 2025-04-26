@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load my_tags %}
+{% load static %}
 
 {% block title %}About{% endblock %}
 
@@ -69,63 +71,20 @@
         Iron Hoof family plays a vital role in delivering the experience you know and love.
         Key Team Members</p>
     <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for member in personnel %}
         <div class="col">
             <div class="card bg-dark text-light h-100">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="{{ member.photo | media_filter }}" class="card-img-top" alt="{{ member.position }}">
                 <div class="card-body">
-                    <h5 class="card-title">Chef Luca Reynolds – Executive Chef</h5>
-                    <p class="card-text">A classically trained chef with a love for bold flavors and wood-fired
-                        perfection, Luca leads our kitchen with creativity and precision. His signature dry-aged
-                        tomahawk is a guest favorite.</p>
+                    <h5 class="card-title text-center">{{ member.name }} - <span class="text-warning fst-italic">{{ member.position }}</span></h5>
+                    <p class="card-text text-center">{{ member.description }}</p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-body-light">Last updated 3 mins ago</small>
+                    <small class="text-body-light fst-italic text-info">"{{ member.quote }}"</small>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card bg-dark text-light h-100">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Sarah Monroe – Farm Operations Lead</h5>
-                    <p class="card-text">Born and raised on the family farm, Sarah oversees the daily care of our
-                        cattle. Her commitment to ethical, sustainable farming is at the heart of our farm-to-table
-                        mission.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-light">Last updated 3 mins ago</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card bg-dark text-light h-100">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Marcus Doyle – Head Butcher</h5>
-                    <p class="card-text">With over 20 years of experience, Marcus hand-selects and prepares every cut
-                        served in our restaurant. He’s known for turning butchery into an art form.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-light">Last updated 3 mins ago</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card bg-dark text-light h-100">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Emily Carter – Guest Experience Manager</h5>
-                    <p class="card-text">Emily brings warmth and attention to every table. Whether it’s a romantic
-                        dinner or a group celebration, she makes sure every guest feels like part of the Iron Hoof
-                        family.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-light">Last updated 3 mins ago</small>
-                </div>
-            </div>
-        </div>
-    </div>
-
+        {% endfor %}
 </div>
 
 

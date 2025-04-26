@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load my_tags %}
 {% load static %}
 
 {% block title %} Home {% endblock %}
@@ -54,43 +54,17 @@
         <hr style="border: 5px solid white; margin: 20px 0;">
         <h2 class="display-5 text-info fst-italic text-center">We're happy to introduce you to our services</h2>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
+            {% for service in services %}
             <div class="col">
                 <div class="card bg-dark text-light h-100">
-                    <img src="{% static 'images/menu.png' %}" class="card-img-top" alt="...">
+                    <img src="{{ service.image | media_filter  }}" class="card-img-top" alt="{{ service.name }}">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Menu</h5>
-                        <p class="card-text">Explore our diverse menu featuring premium steaks, burgers, and more.</p>
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text">{{ service.description }}</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card bg-dark text-light h-100">
-                    <img src="{% static 'images/banquet.avif' %}" class="card-img-top" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Banquet</h5>
-                        <p class="card-text">Host your special events with our tailored banquet services.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-dark text-light h-100">
-                    <img src="{% static 'images/delivery.png' %}" class="card-img-top" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Food Delivery</h5>
-                        <p class="card-text">Enjoy our delicious meals delivered straight to your door.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-dark text-light h-100">
-                    <img src="{% static 'images/tour.png' %}" class="card-img-top" alt="...">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Guided Farm Tour</h5>
-                        <p class="card-text">Take a guided tour of our farm and experience the source of our
-                            quality.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 </figure>
 <h2 class="display-5 text-info fst-italic text-center">Please leave your feedback!</h2>
