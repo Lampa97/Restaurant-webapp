@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% load static %}
+
+{% block title %} {{ meal.category }} {% endblock %}
+{% block content %}
+{% for meal in meals %}
+<div class="card mb-3 border-dark">
+  <img src="{{ meal.image | media_filter }}" class="card-img-top" alt="{{ meal.name}}">
+  <div class="card-body bg-dark">
+    <h5 class="card-title text-center text-warning">{{ meal.name }}</h5>
+    <p class="card-text text-center text-light">{{ meal.description }}</p>
+    <h3 class="card-text text-center text-light fst-italic">{{ meal.price }}$</h3>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
