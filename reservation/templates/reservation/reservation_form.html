@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} Reservation {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" action="{% url 'reservation:reservation-create' %}" class="bg-dark p-4 rounded">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.date.label_tag }}
+                    {{ form.date }}
+                </div>
+                <div class="mb-3">
+                    {{ form.total_persons.label_tag }}
+                    {{ form.total_persons }}
+                </div>
+                <div class="mb-3">
+                    {{ form.start_time.label_tag }}
+
+                    {{ form.start_time }}
+
+
+                </div>
+                <div class="mb-3">
+                    {{ form.end_time.label_tag }}
+
+                    {{ form.end_time }}
+
+
+                </div>
+                <div class="mb-3">
+                    {{ form.table.label_tag }}
+
+                    {{ form.table }}
+
+
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Make a reservation</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

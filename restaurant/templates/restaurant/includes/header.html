@@ -3,7 +3,8 @@
 <nav class="navbar navbar-expand-lg bg-dark border-body sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="restaurant:home">
-            <img src="{% static 'images/buffalo.png' %}" alt="Logo" width="100" height="100" class="d-inline-block align-text-center">
+            <img src="{% static 'images/buffalo.png' %}" alt="Logo" width="100" height="100"
+                 class="d-inline-block align-text-center">
             Iron Hoof SteakHouse
         </a>
         <ul class="nav justify-content-center">
@@ -11,16 +12,17 @@
                 <a class="navbar-brand" href="{% url 'restaurant:home' %}">Home</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Services</a>
-            <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Menu</a></li>
-      <li><a class="dropdown-item" href="#">Food Delivery</a></li>
-      <li><a class="dropdown-item" href="#">Banquet</a></li>
-      <li><a class="dropdown-item" href="#">Guided Farm Tour</a></li>
-            </ul>
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">Services</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Menu</a></li>
+                    <li><a class="dropdown-item" href="#">Food Delivery</a></li>
+                    <li><a class="dropdown-item" href="#">Banquet</a></li>
+                    <li><a class="dropdown-item" href="#">Guided Farm Tour</a></li>
+                </ul>
             </li>
             <li class="nav-item">
-                <a class="navbar-brand" href="{% url 'restaurant:home' %}">Reservation</a>
+                <a class="navbar-brand" href="{% url 'reservation:reservation-create' %}">Reservation</a>
             </li>
             <li class="nav-item">
                 <a class="navbar-brand" href="{% url 'restaurant:about' %}">About us</a>
@@ -59,4 +61,3 @@
 
     </div>
 </nav>
-
