@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+    <h4 class="text-center text-warning">Registration Page</h4>
+<div class="d-flex justify-content-center align-items-center">
+    <form method="post" class="p-4 border rounded bg-light">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <button class="btn btn-primary w-100" type="submit">Sign up</button>
+    </form>
+</div>
+{% endblock %}

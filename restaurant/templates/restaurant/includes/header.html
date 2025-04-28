@@ -30,8 +30,8 @@
 
             <li class="nav-item p-0">
                 <button type="button" class="btn btn-warning">
-                <a class="navbar-brand text-dark" href="{% url 'reservation:reservation-create' %}">Book a table</a>
-            </button>
+                    <a class="navbar-brand text-dark" href="{% url 'reservation:reservation-create' %}">Book a table</a>
+                </button>
             </li>
 
 
@@ -48,18 +48,26 @@
             <li class="nav-item">
                 <a class="navbar-brand" href="{% url 'restaurant:home' %}">Personal cabinet</a>
             </li>
-            <li class="nav-item">
 
-                <a class="navbar-brand" href="{% url 'restaurant:home' %}">Logout</a>
+            <li class="nav-item">
+                <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 btn btn-outline-danger">Logout</button>
+                </form>
             </li>
 
             {% else %}
             <li class="nav-item">
-                <a class="navbar-brand" href="{% url 'restaurant:home' %}">Login</a>
+                <form method="post" action="{% url 'users:login' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 btn btn-outline-info">Login</button>
+                </form>
             </li>
             <li class="nav-item">
-
-                <a class="navbar-brand" href="{% url 'restaurant:home' %}">Sign up</a>
+                <form method="post" action="{% url 'users:register' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 btn btn-outline-info">Sign up</button>
+                </form>
             </li>
             {% endif %}
         </ul>

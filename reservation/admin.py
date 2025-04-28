@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Table, Reservation
+from .models import Reservation, Table
 
 
 @admin.register(Table)
@@ -8,6 +8,7 @@ class CategoryTable(admin.ModelAdmin):
     list_display = ("number", "capacity")
     search_fields = ("number", "capacity")
     list_filter = ("capacity",)
+
 
 @admin.register(Reservation)
 class CategoryReservation(admin.ModelAdmin):

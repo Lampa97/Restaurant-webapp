@@ -1,7 +1,9 @@
+import logging
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
+import colorlog
+from dotenv import load_dotenv
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
     "users",
     "django_celery_beat",
     "django_celery_results",
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +139,46 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+LOG_LEVEL = logging.DEBUG
+
+LOG_FORMAT = "%(log_color)s%(levelname)s: %(asctime)s: %(message)s"
+
+LOG_COLORS = {
+    "DEBUG": "cyan",
+    "INFO": "green",
+    "WARNING": "yellow",
+    "ERROR": "red",
+    "CRITICAL": "bold_red",
+}
+
+formatter = colorlog.ColoredFormatter(LOG_FORMAT, log_colors=LOG_COLORS)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "colored",
+        },
+    },
+    "formatters": {
+        "colored": {
+            "()": colorlog.ColoredFormatter,
+            "format": LOG_FORMAT,
+            "log_colors": LOG_COLORS,
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -155,3 +198,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = "restaurant:home"
+
+LOGIN_URL = "users:login"
+
+LOGOUT_REDIRECT_URL = "restaurant:home"

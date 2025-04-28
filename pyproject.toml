@@ -9,6 +9,7 @@ dependencies = [
     "django-celery-beat>=2.8.0",
     "django-celery-results>=2.6.0",
     "django-cors-headers>=4.7.0",
+    "django-crispy-forms>=2.4",
     "django-redis>=5.4.0",
     "eventlet>=0.39.1",
     "gunicorn>=23.0.0",
@@ -20,6 +21,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "colorlog>=6.9.0",
     "ipython>=9.1.0",
 ]
 lint = [

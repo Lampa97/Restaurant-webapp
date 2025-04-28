@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Service(models.Model):
     name = models.CharField(max_length=100, verbose_name="Service Name")
     description = models.TextField(verbose_name="Service Description")

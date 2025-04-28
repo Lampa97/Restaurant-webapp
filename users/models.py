@@ -12,11 +12,14 @@ class User(AbstractUser):
         blank=True,
         null=True,
         unique=True,
-        verbose_name="Phone_number",
+        verbose_name="Phone number",
         validators=[validate_phone_number],
     )
     full_name = models.CharField(max_length=100, blank=True, null=True, verbose_name="Full name")
     had_booked = models.BooleanField(default=False, verbose_name="Had booked")
+    token = models.CharField(max_length=100, blank=True, null=True, verbose_name="Token")
+    password_reset_token = models.CharField(max_length=100, blank=True, null=True, verbose_name="Reset_Token")
+
 
     class Meta:
         verbose_name = "User"

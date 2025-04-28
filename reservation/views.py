@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import CreateView
+
 from .forms import ReservationForm
-from .models import Table, Reservation
+from .models import Reservation, Table
 
 
 class ReservationCreateView(CreateView):
@@ -12,7 +13,7 @@ class ReservationCreateView(CreateView):
 
     def form_valid(self, form):
         # Mark the selected table as reserved
-        table = form.cleaned_data['table']
+        table = form.cleaned_data["table"]
         table.is_reserved = True
         table.save()
 

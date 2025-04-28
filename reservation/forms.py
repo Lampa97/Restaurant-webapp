@@ -17,11 +17,21 @@ class ReservationForm(forms.ModelForm):
         }
         widgets = {
             "table": forms.Select(attrs={"placeholder": "Select table", "style": "background-color: #f8f9fa;"}),
-            "customer": forms.TextInput(attrs={"placeholder": "Enter customer name", "style": "background-color: #f8f9fa;"}),
-            "date": forms.DateInput(attrs={"placeholder": "Select date", "style": "background-color: #f8f9fa;", 'type': 'date'}),
-            "start_time": forms.TimeInput(attrs={"placeholder": "Select start time", "style": "background-color: #f8f9fa;", 'type': 'time'}),
-            "end_time": forms.TimeInput(attrs={"placeholder": "Select end time", "style": "background-color: #f8f9fa;", 'type': 'time'}),
-            "total_persons": forms.NumberInput(attrs={"placeholder": "Enter total persons", "style": "background-color: #f8f9fa;"}),
+            "customer": forms.TextInput(
+                attrs={"placeholder": "Enter customer name", "style": "background-color: #f8f9fa;"}
+            ),
+            "date": forms.DateInput(
+                attrs={"placeholder": "Select date", "style": "background-color: #f8f9fa;", "type": "date"}
+            ),
+            "start_time": forms.TimeInput(
+                attrs={"placeholder": "Select start time", "style": "background-color: #f8f9fa;", "type": "time"}
+            ),
+            "end_time": forms.TimeInput(
+                attrs={"placeholder": "Select end time", "style": "background-color: #f8f9fa;", "type": "time"}
+            ),
+            "total_persons": forms.NumberInput(
+                attrs={"placeholder": "Enter total persons", "style": "background-color: #f8f9fa;"}
+            ),
         }
 
     def clean(self):
@@ -31,6 +41,7 @@ class ReservationForm(forms.ModelForm):
 
         if table and total_persons and total_persons > table.capacity:
             raise ValidationError(
-                f"Total persons ({total_persons}) cannot exceed the table's capacity ({table.capacity}).")
+                f"Total persons ({total_persons}) cannot exceed the table's capacity ({table.capacity})."
+            )
 
         return cleaned_data
