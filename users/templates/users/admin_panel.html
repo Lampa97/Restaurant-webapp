@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Admin Panel {% endblock %}
+
+{% block content %}
+
+<h2 class="text-center text-warning">Administration Panel</h2>
+<div class="d-flex justify-content-center align-items-center">
+<div class="list-group list-group-numbered">
+    <a href="{% url 'services:meal-category-list' %}" class="list-group-item list-group-item-action border-dark">Menu</a>
+    <a href="#" class="list-group-item list-group-item-action border-dark">Services</a>
+    <a href="#" class="list-group-item list-group-item-action border-dark">Personnel</a>
+    <a href="#" class="list-group-item list-group-item-action border-dark">Reviews</a>
+    <a href="" class="list-group-item list-group-item-action border-dark">Reservations</a>
+    <a href="" class="list-group-item list-group-item-action border-dark">Tables</a>
+    <a href="" class="list-group-item list-group-item-action border-dark">Users</a>
+</div>
+</div>
+
+
+
+{% endblock %}

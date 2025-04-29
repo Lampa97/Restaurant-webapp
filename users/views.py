@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView, UpdateView, View
+from django.views.generic import DetailView, ListView, UpdateView, View, TemplateView
 from django.views.generic.edit import FormView
 
 from .forms import CustomUserCreationForm, CustomLoginForm, PasswordResetConfirmForm, PasswordResetRequestForm
@@ -21,6 +21,11 @@ def email_verification(request, token):
     users_logger.info(f"User {user} confirmed email.")
     messages.success(request, "You successfully confirmed your email. Now you can login.")
     return redirect(reverse("users:login"))
+
+
+class AdminPanelView(TemplateView):
+    template_name = "users/admin_panel.html"
+
 
 
 class CustomLoginView(LoginView):

@@ -1,7 +1,31 @@
 {% extends 'base.html' %}
 
+{% load my_tags %}
+
 {% block title %} Meal Category List {% endblock %}
 
 {% block content %}
 
+<h2 class="text-center text-warning">Meal Categories</h2>
+<div class="d-flex justify-content-center align-items-center">
+
+  <a href="{% url 'services:meal-category-create' %}" class="btn btn-primary">Create Meal Category</a>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+{% for category in categories %}
+
+  <div class="col">
+    <div class="card">
+      <img src="{{ category.image | media_filter }}" class="card-img-top" alt="{{ category.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ category.name }}</h5>
+        <p class="card-text">{{ category.description }}</p>
+          <a href="{% url 'services:meal-list' category.pk %}" class="btn btn-warning">See meals</a>
+          <a href="{% url 'services:meal-category-update' category.pk %}" class="btn btn-info">Update</a>
+          <a href="{% url 'services:meal-category-delete' category.pk %}" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
 {% endblock %}

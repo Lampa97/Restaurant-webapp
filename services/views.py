@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView, DeleteView
-
+from django.urls import reverse_lazy
 from .models import Meal, MealCategory
+from .forms import MealCategoryForm, MealForm
 
 
 class BanquetView(TemplateView):
@@ -9,14 +10,10 @@ class BanquetView(TemplateView):
 
 
 class MenuView(ListView):
-    model = Meal
+    model = MealCategory
     template_name = "services/menu.html"
-    context_object_name = "meals"
+    context_object_name = "categories"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = MealCategory.objects.all()
-        return context
 
 
 class MenuDetailView(ListView):
@@ -47,61 +44,55 @@ class MealListView(ListView):
 
 class MealCreateView(CreateView):
     model = Meal
-    template_name = "services/admin/meal_create.html"
-    fields = ["name", "description", "price", "category", "image"]
-    success_url = ""
+    template_name = "services/admin/meal_form.html"
+    form_class = MealForm
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
+
 
 
 class MealUpdateView(UpdateView):
     model = Meal
-    template_name = "services/admin/meal_update.html"
-    fields = ["name", "description", "price", "category", "image"]
-    success_url = ""
+    template_name = "services/admin/meal_form.html"
+    form_class = MealForm
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
+
+
 
 
 class MealDeleteView(DeleteView):
     model = Meal
     template_name = "services/admin/meal_delete.html"
-    success_url = ""
+    success_url = reverse_lazy("services:meal-list")
 
 
 class MealCategoryListView(ListView):
     model = MealCategory
     template_name = "services/admin/meal_category_list.html"
-    context_object_name = "meals"
+    context_object_name = "categories"
 
 
 class MealCategoryCreateView(CreateView):
     model = MealCategory
-    template_name = "services/admin/meal_category_create.html"
-    fields = ["name", "description", "image"]
-    success_url = ""
+    form_class = MealCategoryForm
+    template_name = "services/admin/meal_category_form.html"
+    success_url = reverse_lazy("services:meal-category-list")
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+
 
 
 class MealCategoryUpdateView(UpdateView):
     model = MealCategory
-    template_name = "services/admin/meal_category_update.html"
-    fields = ["name", "description", "image"]
-    success_url = ""
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    form_class = MealCategoryForm
+    template_name = "services/admin/meal_category_form.html"
+    success_url = reverse_lazy("services:meal-category-list")
 
 
 class MealCategoryDeleteView(DeleteView):
-    model = Meal
+    model = MealCategory
     template_name = "services/admin/meal_category_delete.html"
-    success_url = ""
+    success_url = reverse_lazy("services:meal-category-list")
+    context_object_name = "category"

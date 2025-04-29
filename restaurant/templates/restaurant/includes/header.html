@@ -41,7 +41,7 @@
         <ul class="nav justify-content-end">
             {% if user.is_staff %}
             <li class="nav-item">
-                <a class="navbar-brand" href="{% url 'restaurant:home' %}">Admin</a>
+                <a class="navbar-brand" href="{% url 'users:admin' %}">Admin</a>
             </li>
             {% endif %}
             {% if user.is_authenticated %}
