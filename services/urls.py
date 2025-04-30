@@ -18,5 +18,4 @@ urlpatterns = [
     path("admin/menu/create/", views.MealCategoryCreateView.as_view(), name="meal-category-create"),
     path("admin/menu/<int:pk>/update/", views.MealCategoryUpdateView.as_view(), name="meal-category-update"),
     path("admin/menu/<int:pk>/delete/", views.MealCategoryDeleteView.as_view(), name="meal-category-delete"),
-
 ]

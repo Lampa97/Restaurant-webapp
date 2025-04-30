@@ -6,10 +6,10 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView, UpdateView, View, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView, UpdateView, View
 from django.views.generic.edit import FormView
 
-from .forms import CustomUserCreationForm, CustomLoginForm, PasswordResetConfirmForm, PasswordResetRequestForm
+from .forms import CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm
 from .logger import users_logger
 from .models import User
 
@@ -25,7 +25,6 @@ def email_verification(request, token):
 
 class AdminPanelView(TemplateView):
     template_name = "users/admin_panel.html"
-
 
 
 class CustomLoginView(LoginView):
@@ -94,7 +93,9 @@ class PasswordResetConfirmView(View):
     def get(self, request, token):
         user = get_object_or_404(User, password_reset_token=token)
         form = PasswordResetConfirmForm()
-        return render(request, "users/password_reset_confirm.html", {"form": form, "token": token, "email": user.email})
+        return render(
+            request, "users/password_reset_confirm.html", {"form": form, "token": token, "email": user.email}
+        )
 
     def post(self, request, token):
         user = get_object_or_404(User, password_reset_token=token)

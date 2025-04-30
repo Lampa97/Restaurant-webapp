@@ -20,7 +20,6 @@ class User(AbstractUser):
     token = models.CharField(max_length=100, blank=True, null=True, verbose_name="Token")
     password_reset_token = models.CharField(max_length=100, blank=True, null=True, verbose_name="Reset_Token")
 
-
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"

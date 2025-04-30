@@ -20,7 +20,7 @@ class Personnel(models.Model):
     position = models.CharField(max_length=100, verbose_name="Personnel Position")
     description = models.TextField(verbose_name="Personnel Description")
     quote = models.TextField(verbose_name="Personnel Quote")
-    photo = models.ImageField(upload_to="personnel/", verbose_name="Personnel Photo")
+    photo = models.ImageField(upload_to="personnel/", verbose_name="Personnel Photo", default="default_person.jpg")
 
     class Meta:
         verbose_name = "Personnel"

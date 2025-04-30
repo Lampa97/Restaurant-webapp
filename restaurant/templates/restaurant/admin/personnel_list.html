@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block title %} Personnel List {% endblock %}
+
+{% block content %}
+
+<h2 class="text-center text-warning">Personnel</h2>
+<div class="d-flex justify-content-center align-items-center">
+
+    <a href="{% url 'restaurant:personnel-create' %}" class="btn btn-primary">Create Personnel member</a>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for member in personnel %}
+
+    <div class="col">
+        <div class="card">
+            <img src="{{ member.photo | media_filter }}" class="card-img-top" alt="{{ member.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ member.name }}</h5>
+                <p class="card-text">{{ member.description }}</p>
+                <div class="card-footer">
+                    <small class="text-body-light fst-italic text-info">"{{ member.quote }}"</small>
+                </div>
+                <a href="{% url 'restaurant:personnel-update' category.pk %}" class="btn btn-info">Update</a>
+                <a href="{% url 'restaurant:personnel-delete' category.pk %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

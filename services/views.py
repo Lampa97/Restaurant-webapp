@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
-from .models import Meal, MealCategory
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+
 from .forms import MealCategoryForm, MealForm
+from .models import Meal, MealCategory
 
 
 class BanquetView(TemplateView):
@@ -13,7 +14,6 @@ class MenuView(ListView):
     model = MealCategory
     template_name = "services/menu.html"
     context_object_name = "categories"
-
 
 
 class MenuDetailView(ListView):
@@ -51,7 +51,6 @@ class MealCreateView(CreateView):
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
-
 class MealUpdateView(UpdateView):
     model = Meal
     template_name = "services/admin/meal_form.html"
@@ -59,8 +58,6 @@ class MealUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
-
-
 
 
 class MealDeleteView(DeleteView):
@@ -80,8 +77,6 @@ class MealCategoryCreateView(CreateView):
     form_class = MealCategoryForm
     template_name = "services/admin/meal_category_form.html"
     success_url = reverse_lazy("services:meal-category-list")
-
-
 
 
 class MealCategoryUpdateView(UpdateView):

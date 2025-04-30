@@ -1,6 +1,54 @@
 from django import forms
 
-from .models import Review
+from .models import Review, Service, Personnel
+
+
+class PersonnelForm(forms.ModelForm):
+    model = Personnel
+    fields = ["name", "position", "description", "quote", "photo"]
+    labels = {"name": "Name", "position": "Position", "description": "Description", "quote": "Quote", "photo": "Photo"}
+    widgets = {
+        "name": forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter person's full name",
+                "style": "background-color: #f8f9fa;",
+            }
+        ),
+        "position": forms.Textarea(
+            attrs={"class": "form-control", "placeholder": "Enter position", "style": "background-color: #f8f9fa;"}
+        ),
+        "description": forms.Textarea(
+            attrs={"class": "form-control", "placeholder": "Enter description", "style": "background-color: #f8f9fa;"}
+        ),
+        "quote": forms.Textarea(
+            attrs={"class": "form-control", "placeholder": "Enter quote", "style": "background-color: #f8f9fa;"}
+        ),
+        "photo": forms.ClearableFileInput(
+            attrs={"class": "form-control", "placeholder": "Choose photo", "style": "background-color: #f8f9fa;"}
+        ),
+    }
+
+
+class ServiceForm(forms.ModelForm):
+    model = Service
+    fields = ["name", "description", "image"]
+    labels = {"name": "Name", "description": "Description", "image": "Image"}
+    widgets = {
+        "name": forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter service name",
+                "style": "background-color: #f8f9fa;",
+            }
+        ),
+        "description": forms.Textarea(
+            attrs={"class": "form-control", "placeholder": "Enter description", "style": "background-color: #f8f9fa;"}
+        ),
+        "image": forms.ClearableFileInput(
+            attrs={"class": "form-control", "placeholder": "Choose image", "style": "background-color: #f8f9fa;"}
+        ),
+    }
 
 
 class ReviewForm(forms.ModelForm):
@@ -14,15 +62,21 @@ class ReviewForm(forms.ModelForm):
             "rating": "Rating",
         }
         widgets = {
-            "name": forms.TextInput(attrs={"placeholder": "Enter your name", "style": "background-color: #f8f9fa;"}),
-            "review_text": forms.Textarea(
-                attrs={"placeholder": "Write your review here", "style": "background-color: #f8f9fa;"}
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter your name",
+                    "style": "background-color: #f8f9fa;",
+                }
             ),
-            "rating": forms.Select(attrs={"placeholder": "Select rating", "style": "background-color: #f8f9fa;"}),
+            "review_text": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Write your review here",
+                    "style": "background-color: #f8f9fa;",
+                }
+            ),
+            "rating": forms.Select(
+                attrs={"class": "form-control", "placeholder": "Select rating", "style": "background-color: #f8f9fa;"}
+            ),
         }
-
-    def __init__(self, *args, **kwargs):
-        super(ReviewForm, self).__init__(*args, **kwargs)
-        self.fields["name"].widget.attrs.update({"class": "form-control"})
-        self.fields["review_text"].widget.attrs.update({"class": "form-control"})
-        self.fields["rating"].widget.attrs.update({"class": "form-control"})

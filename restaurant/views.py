@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import CreateView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView, ListView
 
-from .forms import ReviewForm
+from .forms import ReviewForm, ServiceForm, PersonnelForm
 from .models import Personnel, Review, Service
 
 
@@ -24,12 +24,63 @@ class AboutView(TemplateView):
         return context
 
 
+class ServiceListView(ListView):
+    model = Service
+    template_name = "restaurant/admin/service_list.html"
+    context_object_name = "services"
+
+
+class ServiceCreateView(CreateView):
+    model = Service
+    form_class = ServiceForm
+    template_name = "restaurant/admin/service_form.html"
+    success_url = reverse_lazy("restaurant:service-list")
+
+class ServiceUpdateView(UpdateView):
+    model = Service
+    form_class = ServiceForm
+    template_name = "restaurant/admin/service_form.html"
+    success_url = reverse_lazy("restaurant:service-list")
+
+class ServiceDeleteView(DeleteView):
+    model = Service
+    template_name = "restaurant/admin/service_delete"
+    success_url = reverse_lazy("restaurant:service-list")
+
+
+class PersonnelListView(ListView):
+    model = Personnel
+    template_name = "restaurant/admin/personnel_list.html"
+    context_object_name = "personnel"
+
+
+class PersonnelCreateView(CreateView):
+    model =Personnel
+    form_class = PersonnelForm
+    template_name = "restaurant/admin/personnel_form.html"
+    success_url = reverse_lazy("restaurant:personnel-list")
+
+
+class PersonnelUpdateView(UpdateView):
+    model = Personnel
+    form_class = PersonnelForm
+    template_name = "restaurant/admin/personnel_form.html"
+    success_url = reverse_lazy("restaurant:personnel-list")
+
+
+class PersonnelDeleteView(DeleteView):
+    model = Personnel
+    template_name = "restaurant/admin/personnel_delete.html"
+    success_url = reverse_lazy("restaurant:personnel-list")
+
+
+class ReviewListView(ListView):
+    model = Review
+    template_name = "restaurant/admin/review_list.html"
+    context_object_name = "reviews"
+
 class ReviewCreateView(CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = "restaurant:review_form"
-    success_url = "restaurant:home"  # Redirect to the home page after successful submission
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    template_name = "restaurant/home.html"
+    success_url = reverse_lazy("restaurant:home")  # Redirect to the home page after successful submission

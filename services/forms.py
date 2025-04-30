@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import MealCategory, Meal
+from .models import Meal, MealCategory
 
 
 class MealCategoryForm(forms.ModelForm):
@@ -18,6 +18,7 @@ class MealCategoryForm(forms.ModelForm):
             "description": "Description",
             "image": "Image",
         }
+
 
 class MealForm(forms.ModelForm):
 
