@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from .forms import ReservationForm
@@ -9,7 +10,7 @@ class ReservationCreateView(CreateView):
     model = Reservation
     form_class = ReservationForm
     template_name = "reservation/reservation_form.html"
-    success_url = "restaurant:home"  # Redirect to a success page after successful submission
+    success_url = reverse_lazy("restaurant:home")  # Redirect to a success page after successful submission
 
     def form_valid(self, form):
         # Mark the selected table as reserved

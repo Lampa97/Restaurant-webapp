@@ -1,5 +1,5 @@
 import secrets
-
+from django.core.paginator import Paginator
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
@@ -12,6 +12,7 @@ from django.views.generic.edit import FormView
 from .forms import CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm
 from .logger import users_logger
 from .models import User
+from reservation.models import Reservation
 
 
 def email_verification(request, token):
@@ -24,7 +25,27 @@ def email_verification(request, token):
 
 
 class AdminPanelView(TemplateView):
-    template_name = "users/admin_panel.html"
+    template_name = "users/admin/admin_panel.html"
+
+
+class UsersListView(ListView):
+    model = User
+    context_object_name = "users"
+
+    def get(self, request):
+        all_users = User.objects.filter(is_staff=False, is_superuser=False)
+        paginator = Paginator(all_users, 10)  # Show 10 users per page
+
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        for user in page_obj:
+            reservation = Reservation.objects.filter(customer=user).first()
+            user.table = reservation.table if reservation else None
+            user.reservation_date = reservation.date if reservation else None
+
+        context = {"users": page_obj}
+        return render(request, "users/admin/users_list.html", context)
 
 
 class CustomLoginView(LoginView):

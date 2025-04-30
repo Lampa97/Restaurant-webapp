@@ -14,4 +14,5 @@ urlpatterns = [
         "reset-password-confirm/<str:token>/", views.PasswordResetConfirmView.as_view(), name="reset-password-confirm"
     ),
     path("admin/", views.AdminPanelView.as_view(), name="admin"),
+    path("admin/all-users/", views.UsersListView.as_view(), name="all-users"),
 ]
