@@ -1,4 +1,5 @@
 from django.urls import reverse_lazy
+from .services import count_avg_rating
 from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView, ListView
 
 from .forms import ReviewForm, ServiceForm, PersonnelForm
@@ -78,6 +79,12 @@ class ReviewListView(ListView):
     model = Review
     template_name = "restaurant/admin/review_list.html"
     context_object_name = "reviews"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        avg_rating = count_avg_rating()
+        context["avg_rating"] = avg_rating
+        return context
 
 class ReviewCreateView(CreateView):
     model = Review
