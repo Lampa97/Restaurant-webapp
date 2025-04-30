@@ -44,7 +44,7 @@ class ServiceUpdateView(UpdateView):
 
 class ServiceDeleteView(DeleteView):
     model = Service
-    template_name = "restaurant/admin/service_delete"
+    template_name = "restaurant/admin/service_delete.html"
     success_url = reverse_lazy("restaurant:service-list")
 
 

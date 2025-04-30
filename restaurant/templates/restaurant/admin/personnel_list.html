@@ -23,8 +23,8 @@
                 <div class="card-footer">
                     <small class="text-body-light fst-italic text-info">"{{ member.quote }}"</small>
                 </div>
-                <a href="{% url 'restaurant:personnel-update' category.pk %}" class="btn btn-info">Update</a>
-                <a href="{% url 'restaurant:personnel-delete' category.pk %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'restaurant:personnel-update' member.pk %}" class="btn btn-info">Update</a>
+                <a href="{% url 'restaurant:personnel-delete' member.pk %}" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>

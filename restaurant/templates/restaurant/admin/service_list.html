@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load my_tags %}
+
+{% block title %} Service List {% endblock %}
+
+{% block content %}
+
+<h2 class="text-center text-warning">Services info for the home page</h2>
+<div class="d-flex justify-content-center align-items-center">
+
+    <a href="{% url 'restaurant:service-create' %}" class="btn btn-primary">Create Service</a>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for service in services %}
+
+    <div class="col">
+        <div class="card">
+            <img src="{{ service.image | media_filter }}" class="card-img-top" alt="{{ service.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ service.name }}</h5>
+                <p class="card-text">{{ service.description }}</p>
+                <a href="{% url 'restaurant:service-update' service.pk %}" class="btn btn-info">Update</a>
+                <a href="{% url 'restaurant:service-delete' service.pk %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

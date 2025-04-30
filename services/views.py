@@ -63,7 +63,9 @@ class MealUpdateView(UpdateView):
 class MealDeleteView(DeleteView):
     model = Meal
     template_name = "services/admin/meal_delete.html"
-    success_url = reverse_lazy("services:meal-list")
+
+    def get_success_url(self):
+        return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
 class MealCategoryListView(ListView):
