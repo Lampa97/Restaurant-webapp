@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load my_tags %}
+
+{% block title %} Reservation List {% endblock %}
+
+{% block content %}
+
+<h2 class="text-center text-warning">Reservations</h2>
+<div class="d-flex justify-content-center align-items-center">
+
+    <a href="{% url 'reservation:reservation-create' %}" class="btn btn-primary">Create a reservation</a>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for reservation in reservations %}
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ reservation.table }}</h5>
+                <p class="card-text">Name: {{ reservation.user }}</p>
+                <p class="card-text">Total persons: {{ reservation.total_persons }}</p>
+                <div class="card-footer">
+                    <small class="text-body-light fst-italic text-info">Reserved for: {{ reservation.date }}: {{reservation.start_time}}-{{reservation_end_time}}</small>
+                    {% if reservation.is_active %}
+                    <small class="text-body-light fst-italic text-success">Status: Active</small>
+                    {% else %}
+                    <small class="text-body-light fst-italic text-danger">Status: Finished</small>
+                </div>
+                <a href="{% url 'reservation:reservation-update' member.pk %}" class="btn btn-info">Update</a>
+                <a href="{% url 'reservation:reservation-delete' member.pk %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

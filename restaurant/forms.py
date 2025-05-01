@@ -7,7 +7,13 @@ class PersonnelForm(forms.ModelForm):
     class Meta:
         model = Personnel
         fields = ["name", "position", "description", "quote", "photo"]
-        labels = {"name": "Name", "position": "Position", "description": "Description", "quote": "Quote", "photo": "Photo"}
+        labels = {
+            "name": "Name",
+            "position": "Position",
+            "description": "Description",
+            "quote": "Quote",
+            "photo": "Photo",
+        }
         widgets = {
             "name": forms.TextInput(
                 attrs={
@@ -20,7 +26,11 @@ class PersonnelForm(forms.ModelForm):
                 attrs={"class": "form-control", "placeholder": "Enter position", "style": "background-color: #f8f9fa;"}
             ),
             "description": forms.Textarea(
-                attrs={"class": "form-control", "placeholder": "Enter description", "style": "background-color: #f8f9fa;"}
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter description",
+                    "style": "background-color: #f8f9fa;",
+                }
             ),
             "quote": forms.Textarea(
                 attrs={"class": "form-control", "placeholder": "Enter quote", "style": "background-color: #f8f9fa;"}
@@ -46,7 +56,11 @@ class ServiceForm(forms.ModelForm):
                 }
             ),
             "description": forms.Textarea(
-                attrs={"class": "form-control", "placeholder": "Enter description", "style": "background-color: #f8f9fa;"}
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter description",
+                    "style": "background-color: #f8f9fa;",
+                }
             ),
             "image": forms.ClearableFileInput(
                 attrs={"class": "form-control", "placeholder": "Choose image", "style": "background-color: #f8f9fa;"}

@@ -22,25 +22,37 @@ class Table(models.Model):
         verbose_name = "Table"
         verbose_name_plural = "Tables"
         ordering = ["number"]
+        permissions = [
+            ("can_admin_website", "Can administer the website"),
+        ]
 
     def __str__(self):
         return f"Table {self.number} - Capacity: {self.capacity}"
 
 
 class Reservation(models.Model):
+
+    TOTAL_PERSONS_CHOICES = [(i, i) for i in range(1, 11)]
+
     table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name="reservations", verbose_name="Table")
     date = models.DateField(verbose_name="Reservation Date")
     start_time = models.TimeField(verbose_name="Start Time")
     end_time = models.TimeField(verbose_name="End Time")
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reservations", verbose_name="Customer")
-    total_persons = models.PositiveIntegerField(
-        verbose_name="Total Persons", validators=[MinValueValidator(1), MaxValueValidator(10)]
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name="reservations", verbose_name="User"
     )
+    total_persons = models.PositiveIntegerField(
+        verbose_name="Total Persons", choices=TOTAL_PERSONS_CHOICES, validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )
+    is_active = models.BooleanField(default=True, verbose_name="Is Active")
 
     class Meta:
         verbose_name = "Reservation"
         verbose_name_plural = "Reservations"
         ordering = ["date", "start_time"]
+        permissions = [
+            ("can_admin_website", "Can administer the website"),
+        ]
 
     def clean(self):
         # Ensure total_persons does not exceed the table's capacity
@@ -50,4 +62,4 @@ class Reservation(models.Model):
             )
 
     def __str__(self):
-        return f"Reservation for {self.customer} on {self.date} at {self.start_time}"
+        return f"Reservation for {self.user} on {self.date} at {self.start_time}"

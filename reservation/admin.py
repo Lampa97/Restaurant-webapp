@@ -12,6 +12,6 @@ class CategoryTable(admin.ModelAdmin):
 
 @admin.register(Reservation)
 class CategoryReservation(admin.ModelAdmin):
-    list_display = ("table", "customer", "date", "start_time", "end_time", "total_persons")
-    search_fields = ("table", "customer", "date", "start_time", "end_time", "total_persons")
-    list_filter = ("customer", "date", "start_time", "end_time", "total_persons")
+    list_display = ("table", "user", "date", "start_time", "end_time", "total_persons", "is_active")
+    search_fields = ("table", "user", "date", "start_time", "end_time", "total_persons")
+    list_filter = ("user", "date", "start_time", "end_time", "total_persons", "is_active")

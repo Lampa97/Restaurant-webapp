@@ -26,9 +26,12 @@ class User(AbstractUser):
         ordering = [
             "full_name",
         ]
+        permissions = [
+            ("can_admin_website", "Can administer the website"),
+        ]
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f"{self.full_name} - {self.email}"
+        return f"{self.full_name}"

@@ -10,6 +10,9 @@ class Service(models.Model):
         verbose_name = "Service"
         verbose_name_plural = "Services"
         ordering = ["name"]
+        permissions = [
+            ("can_admin_website", "Can administer the website"),
+        ]
 
     def __str__(self):
         return self.name
@@ -27,6 +30,9 @@ class Personnel(models.Model):
         verbose_name_plural = "Personnel"
         ordering = ["name"]
         unique_together = ("name", "position")
+        permissions = [
+            ("can_admin_website", "Can administer the website"),
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.position}"
@@ -50,6 +56,9 @@ class Review(models.Model):
         verbose_name = "Review"
         verbose_name_plural = "Reviews"
         ordering = ["-date"]
+        permissions = [
+            ("can_admin_website", "Can administer the website"),
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.rating}"

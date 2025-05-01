@@ -37,11 +37,13 @@ class ServiceCreateView(CreateView):
     template_name = "restaurant/admin/service_form.html"
     success_url = reverse_lazy("restaurant:service-list")
 
+
 class ServiceUpdateView(UpdateView):
     model = Service
     form_class = ServiceForm
     template_name = "restaurant/admin/service_form.html"
     success_url = reverse_lazy("restaurant:service-list")
+
 
 class ServiceDeleteView(DeleteView):
     model = Service
@@ -56,7 +58,7 @@ class PersonnelListView(ListView):
 
 
 class PersonnelCreateView(CreateView):
-    model =Personnel
+    model = Personnel
     form_class = PersonnelForm
     template_name = "restaurant/admin/personnel_form.html"
     success_url = reverse_lazy("restaurant:personnel-list")
@@ -85,6 +87,7 @@ class ReviewListView(ListView):
         avg_rating = count_avg_rating()
         context["avg_rating"] = avg_rating
         return context
+
 
 class ReviewCreateView(CreateView):
     model = Review
