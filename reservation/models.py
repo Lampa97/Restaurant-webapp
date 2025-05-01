@@ -41,6 +41,8 @@ class Reservation(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name="reservations", verbose_name="User"
     )
+    user_name = models.CharField(max_length=100, blank=True, null=True, verbose_name="User Name")
+    user_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name="User Phone")
     total_persons = models.PositiveIntegerField(
         verbose_name="Total Persons", choices=TOTAL_PERSONS_CHOICES, validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
@@ -54,12 +56,6 @@ class Reservation(models.Model):
             ("can_admin_website", "Can administer the website"),
         ]
 
-    def clean(self):
-        # Ensure total_persons does not exceed the table's capacity
-        if self.total_persons > self.table.capacity:
-            raise ValidationError(
-                f"Total persons ({self.total_persons}) cannot exceed the table's capacity ({self.table.capacity})."
-            )
 
     def __str__(self):
         return f"Reservation for {self.user} on {self.date} at {self.start_time}"

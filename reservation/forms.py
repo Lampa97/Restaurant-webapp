@@ -3,28 +3,29 @@ from django.core.exceptions import ValidationError
 from datetime import date, timedelta, time
 from .models import Reservation, Table
 
-
-class ReservationStep1Form(forms.Form):
-    date = forms.DateField(
-        widget=forms.DateInput(
-            attrs={
-                "class": "form-control",
-                "type": "date",
-                "min": date.today().isoformat(),
-                "max": (date.today() + timedelta(days=6 * 30)).isoformat(),
-            }
-        ),
-        label="Date",
-    )
-    start_time = forms.TimeField(
-        widget=forms.TimeInput(attrs={"class": "form-control", "type": "time"}), label="Start Time"
-    )
-    end_time = forms.TimeField(
-        widget=forms.TimeInput(attrs={"class": "form-control", "type": "time"}), label="End Time"
-    )
-    total_persons = forms.IntegerField(
-        widget=forms.NumberInput(attrs={"class": "form-control"}), label="Total Persons", min_value=1, max_value=10
-    )
+class ReservationStep1Form(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ['date', 'start_time', 'end_time', 'total_persons']
+        widgets = {
+            'date': forms.DateInput(
+                attrs={
+                    "class": "form-control",
+                    "type": "date",
+                    "min": date.today().isoformat(),
+                    "max": (date.today() + timedelta(days=6 * 30)).isoformat(),
+                }
+            ),
+            'start_time': forms.TimeInput(attrs={"class": "form-control", "type": "time"}),
+            'end_time': forms.TimeInput(attrs={"class": "form-control", "type": "time"}),
+            'total_persons': forms.Select(attrs={"class": "form-control"}),
+        }
+        labels = {
+            'date': "Date",
+            'start_time': "Start Time",
+            'end_time': "End Time",
+            'total_persons': "Total Persons",
+        }
 
     def clean(self):
         cleaned_data = super().clean()
@@ -52,12 +53,19 @@ class ReservationStep1Form(forms.Form):
         return cleaned_data
 
 
-class ReservationStep2Form(forms.Form):
+class ReservationStep2Form(forms.ModelForm):
     table = forms.ModelChoiceField(
         queryset=Table.objects.none(),
         widget=forms.Select(attrs={"class": "form-control"}),
         label="Table",
     )
+
+    class Meta:
+        model = Reservation
+        fields = ['table']
+        labels = {
+            'table': "Table",
+        }
 
     def __init__(self, *args, **kwargs):
         available_tables = kwargs.pop("available_tables", Table.objects.none())

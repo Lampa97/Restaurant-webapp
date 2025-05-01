@@ -13,10 +13,28 @@ class ReservationAdminListView(ListView):
     context_object_name = "reservations"
 
 
+class ReservationAdminStep1UpdateView(UpdateView):
+    model = Reservation
+    form_class = ReservationStep1Form
+    template_name = "reservation/reservation1_form.html"
+
+    def form_valid(self, form):
+        # Convert date and time objects to strings before saving in the session
+        cleaned_data = form.cleaned_data
+        cleaned_data["date"] = cleaned_data["date"].isoformat()
+        cleaned_data["start_time"] = cleaned_data["start_time"].isoformat()
+        cleaned_data["end_time"] = cleaned_data["end_time"].isoformat()
+        self.request.session["reservation_step1_data"] = cleaned_data
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("reservation:reservation-step2")
+
+
 class ReservationAdminDeleteView(DeleteView):
     model = Reservation
     template_name = "reservation/admin/reservation_delete.html"
-    success_url = reverse_lazy("restaurant:reservation-list")
+    success_url = reverse_lazy("reservation:reservation-list")
 
 
 class ReservationStep1View(FormView):
@@ -30,6 +48,8 @@ class ReservationStep1View(FormView):
         cleaned_data["date"] = cleaned_data["date"].isoformat()
         cleaned_data["start_time"] = cleaned_data["start_time"].isoformat()
         cleaned_data["end_time"] = cleaned_data["end_time"].isoformat()
+        cleaned_data["user_name"] = None if self.request.user.groups.filter(name="Manager").exists() else self.request.user.full_name
+        cleaned_data["user_phone"] = None if self.request.user.groups.filter(name="Manager").exists() else self.request.user.phone_number
         self.request.session["reservation_step1_data"] = cleaned_data
         return super().form_valid(form)
 
@@ -85,7 +105,10 @@ class ReservationStep2View(FormView):
             start_time=step1_data["start_time"],
             end_time=step1_data["end_time"],
             total_persons=step1_data["total_persons"],
-            user=customer,
+            user=self.request.user if not self.request.user.groups.filter(name="Manager").exists() else None,
+            user_name=step1_data.get("user_name"),
+            user_phone=step1_data.get("user_phone"),
+
         )
 
         # Mark the table as reserved
