@@ -5,7 +5,13 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-
+        {% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
 <figure class="text-center text-light">
     <h1 class="display-3 fw-bold text-uppercase text-warning">
         Welcome to Iron Hoof SteakHouse

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView, TemplateView
@@ -96,6 +97,12 @@ class ReservationStep1View(LoginRequiredMixin, FormView):
     success_url = reverse_lazy("reservation:reservation-step2")
 
     def form_valid(self, form):
+        reservation = Reservation.objects.filter(user=self.request.user).first()
+        if reservation:
+            messages.error(self.request, f"You may have only 1 reservation at a time. You current reservation is on {reservation.date} from {reservation.start_time} to {reservation.end_time} at table {reservation.table}.")
+            return HttpResponseRedirect(reverse_lazy("restaurant:home"))
+
+
         # Convert date and time objects to strings before saving in the session
         cleaned_data = form.cleaned_data
         cleaned_data["date"] = cleaned_data["date"].isoformat()
@@ -110,7 +117,7 @@ class ReservationStep1View(LoginRequiredMixin, FormView):
 class ReservationStep2View(LoginRequiredMixin, FormView):
     template_name = "reservation/reservation2_form.html"
     form_class = ReservationStep2Form
-    success_url = reverse_lazy("reservation:reservation-list")
+    success_url = reverse_lazy("restaurant:home")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
