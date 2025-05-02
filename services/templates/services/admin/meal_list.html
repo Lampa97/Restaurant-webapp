@@ -12,7 +12,7 @@
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for meal in meals %}
     <div class="col d-flex align-items-stretch">
-        <div class="card mb-3 border-dark ">
+        <div class="card mb-3 border-dark bg-dark text-light ">
             <img src="{{ meal.image | media_filter }}" class="card-img-top" alt="{{ meal.name }}">
             <div class="card-body bg-dark">
                 <h3 class="card-title text-center text-warning fst-italic">{{ meal.name }}</h3>

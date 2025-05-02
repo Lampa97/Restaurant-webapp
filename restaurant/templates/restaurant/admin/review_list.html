@@ -13,10 +13,11 @@
     {% for review in reviews %}
 
     <div class="col">
-        <div class="card">
+        <div class="card border-dark bg-dark text-light">
             <div class="card-body">
-                <h5 class="card-title">{{ review.name }} - {{ review.rating }}</h5>
-                <p class="card-text">{{ review.review_text }}</p>
+                <h5 class="card-title">Name: {{ review.name }}</h5>
+                <h5 class="card-text">Rating: {{ review.rating }}</h5>
+                <p class="card-text">Text: {{ review.review_text }}</p>
                 <div class="card-footer">
                     <small class="text-body-light fst-italic text-info">"{{ review.date }}"</small>
                 </div>
