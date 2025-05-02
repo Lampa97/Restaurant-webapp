@@ -4,8 +4,47 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from .forms import ReservationStep1Form, ReservationStep2Form
+from .forms import ReservationStep1Form, ReservationStep2Form, TableForm
 from .models import Reservation, Table
+
+
+class TableListView(PermissionRequiredMixin, ListView):
+    model = Table
+    template_name = "reservation/admin/table_list.html"
+    context_object_name = "tables"
+    permission_required = "reservation.can_admin_website"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tables = context["tables"]
+        table_reservations = {
+            table: table.reservations.all() for table in tables
+        }
+        context["table_reservations"] = table_reservations
+        return context
+
+
+class TableCreateView(PermissionRequiredMixin, CreateView):
+    template_name = "reservation/admin/table_form.html"
+    form_class = TableForm
+    model = Table
+    permission_required = "reservation.can_admin_website"
+    success_url = reverse_lazy("reservation:table-list")
+
+
+class TableUpdateView(PermissionRequiredMixin, UpdateView):
+    template_name = "reservation/admin/table_form.html"
+    form_class = TableForm
+    model = Table
+    success_url = reverse_lazy("reservation:table-list")
+    permission_required = "reservation.can_admin_website"
+
+
+class TableDeleteView(PermissionRequiredMixin, DeleteView):
+    template_name = "reservation/admin/table_delete.html"
+    permission_required = "reservation.can_admin_website"
+    model = Table
+    success_url = reverse_lazy("reservation:table-list")
 
 
 class ReservationAdminListView(PermissionRequiredMixin, ListView):
@@ -71,7 +110,7 @@ class ReservationStep1View(LoginRequiredMixin, FormView):
 class ReservationStep2View(LoginRequiredMixin, FormView):
     template_name = "reservation/reservation2_form.html"
     form_class = ReservationStep2Form
-    success_url = reverse_lazy("restaurant:home")
+    success_url = reverse_lazy("reservation:reservation-list")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

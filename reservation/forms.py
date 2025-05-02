@@ -3,6 +3,31 @@ from django.core.exceptions import ValidationError
 from datetime import date, timedelta, time
 from .models import Reservation, Table
 
+
+class TableForm(forms.ModelForm):
+    number = forms.ChoiceField(
+        widget=forms.Select(attrs={"class": "form-control",
+                            "placeholder": "Select available Table number"}),
+        label="Table",
+    )
+    class Meta:
+        model = Table
+        fields = ['number', 'capacity']
+        widgets = {
+            'capacity': forms.Select(
+                attrs={"class": "form-control",
+                       "placeholder": "Select Table capacity"}
+            ),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Get all possible table numbers (1 to 20) and exclude those already in the database
+        existing_numbers = Table.objects.values_list('number', flat=True)
+        available_numbers = [(i, i) for i in range(1, 21) if i not in existing_numbers]
+        self.fields['number'].choices = available_numbers
+
 class ReservationStep1Form(forms.ModelForm):
     class Meta:
         model = Reservation

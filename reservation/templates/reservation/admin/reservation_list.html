@@ -23,7 +23,8 @@
                 <p class="card-text">Total persons: {{ reservation.total_persons }}</p>
                 <div class="card-footer">
                     <small class="text-body-light fst-italic text-info">Reservation date and time:
-                        <p>{{ reservation.date }}: {{reservation.start_time}}-{{reservation.end_time}}<p/>
+                        <p>{{ reservation.date }}: {{reservation.start_time}}-{{reservation.end_time}}
+                        <p/>
                     </small>
                     {% if reservation.is_active %}
                     <p class="text-body-light fst-italic text-success">Status: Active</p>

@@ -18,7 +18,8 @@
                 {% if user.had_booked %}
                 <p class="card-text text-success">User currently booked table №{{ user.table.number }}</p>
                 <div class="card-footer">
-                    <small class="text-body-light fst-italic text-info">Reservation date: {{ user.reservation_date }}</small>
+                    <small class="text-body-light fst-italic text-info">Reservation date: {{ user.reservation_date
+                        }}</small>
                 </div>
                 {% else %}
                 <p class="card-text text-danger">User doesn't have current bookings</p>

@@ -7,7 +7,7 @@
 {% block content %}
 <nav id="navbar-example2"
      class="navbar bg-body-tertiary px-3 mb-3 bg-dark text-light border-top border-bottom"
-      data-bs-theme="dark">
+     data-bs-theme="dark">
     <ul class="nav nav-pills bg-dark d-flex justify-content-between w-100">
         <li class="nav-item col-4 text-center">
             <a class="nav-link text-light fst-italic " href="#scrollspyHeading1">Iron Hoof History</a>
@@ -69,14 +69,15 @@
 
         From the fields where our cattle are raised to the kitchen where our steaks are perfected, every member of the
         Iron Hoof family plays a vital role in delivering the experience you know and love.
-        </p>
+    </p>
     <div class="row row-cols-1 row-cols-md-2 g-4">
         {% for member in personnel %}
         <div class="col">
             <div class="card bg-dark text-light h-100">
                 <img src="{{ member.photo | media_filter }}" class="card-img-top" alt="{{ member.position }}">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{ member.name }} - <span class="text-warning fst-italic">{{ member.position }}</span></h5>
+                    <h5 class="card-title text-center">{{ member.name }} - <span class="text-warning fst-italic">{{ member.position }}</span>
+                    </h5>
                     <p class="card-text text-center">{{ member.description }}</p>
                 </div>
                 <div class="card-footer">
@@ -85,22 +86,22 @@
             </div>
         </div>
         {% endfor %}
-</div>
+    </div>
 
 
-<style>
-    .nav-link {
-      transition: background-color 0.2s, color 0.2s; /* Smooth transition for color changes */
-    }
+    <style>
+        .nav-link {
+          transition: background-color 0.2s, color 0.2s; /* Smooth transition for color changes */
+        }
 
-    .nav-link:focus, .nav-link:active, .nav-link:hover .nav-link.active {
-      background-color: white !important;
-      color: black !important;
-    }
+        .nav-link:focus, .nav-link:active, .nav-link:hover .nav-link.active {
+          background-color: white !important;
+          color: black !important;
+        }
 
-</style>
+    </style>
 
-{% endblock %}
+    {% endblock %}
 
 
 

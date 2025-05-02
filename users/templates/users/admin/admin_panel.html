@@ -6,17 +6,18 @@
 
 <h2 class="text-center text-warning">Administration Panel</h2>
 <div class="d-flex justify-content-center align-items-center">
-<div class="list-group list-group-numbered">
-    <a href="{% url 'services:meal-category-list' %}" class="list-group-item list-group-item-action border-dark">Menu</a>
-    <a href="{% url 'restaurant:service-list' %}" class="list-group-item list-group-item-action border-dark">Services</a>
-    <a href="{% url 'restaurant:personnel-list' %}" class="list-group-item list-group-item-action border-dark">Personnel</a>
-    <a href="{% url 'restaurant:review-list' %}" class="list-group-item list-group-item-action border-dark">Reviews</a>
-    <a href="{% url 'reservation:reservation-list' %}" class="list-group-item list-group-item-action border-dark">Reservations</a>
-    <a href="" class="list-group-item list-group-item-action border-dark">Tables</a>
-    <a href="{% url 'users:all-users' %}" class="list-group-item list-group-item-action border-dark">Users</a>
+    <div class="list-group list-group-numbered">
+        <a href="{% url 'services:meal-category-list' %}" class="list-group-item list-group-item-action border-dark">Menu</a>
+        <a href="{% url 'restaurant:service-list' %}" class="list-group-item list-group-item-action border-dark">Services</a>
+        <a href="{% url 'restaurant:personnel-list' %}" class="list-group-item list-group-item-action border-dark">Personnel</a>
+        <a href="{% url 'restaurant:review-list' %}"
+           class="list-group-item list-group-item-action border-dark">Reviews</a>
+        <a href="{% url 'reservation:reservation-list' %}" class="list-group-item list-group-item-action border-dark">Reservations</a>
+        <a href="{% url 'reservation:table-list' %}"
+           class="list-group-item list-group-item-action border-dark">Tables</a>
+        <a href="{% url 'users:all-users' %}" class="list-group-item list-group-item-action border-dark">Users</a>
+    </div>
 </div>
-</div>
-
 
 
 {% endblock %}

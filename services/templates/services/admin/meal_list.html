@@ -3,11 +3,11 @@
 {% block title %} Meal list {% endblock %}
 
 {% block content %}
-  <a href="{% url 'services:meal-category-list' %}" class="btn btn-secondary">Back to all categories</a>
+<a href="{% url 'services:meal-category-list' %}" class="btn btn-secondary">Back to all categories</a>
 <h1 class="text-center text-warning">{{ meals.0.category }} Menu</h1>
 <div class="d-flex justify-content-center align-items-center">
 
-  <a href="{% url 'services:meal-create' %}" class="btn btn-primary">Create Meal</a>
+    <a href="{% url 'services:meal-create' %}" class="btn btn-primary">Create Meal</a>
 </div>
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for meal in meals %}
@@ -18,8 +18,8 @@
                 <h3 class="card-title text-center text-warning fst-italic">{{ meal.name }}</h3>
                 <p class="card-text text-center text-light">{{ meal.description }}</p>
                 <h3 class="card-text text-center text-light fst-italic ">{{ meal.price }}$</h3>
-          <a href="{% url 'services:meal-update' meal.pk %}" class="btn btn-info">Update</a>
-          <a href="{% url 'services:meal-delete' meal.pk %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'services:meal-update' meal.pk %}" class="btn btn-info">Update</a>
+                <a href="{% url 'services:meal-delete' meal.pk %}" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>

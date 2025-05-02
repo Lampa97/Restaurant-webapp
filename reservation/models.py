@@ -14,7 +14,7 @@ class Table(models.Model):
 
     CAPACITY_CHOICES = [(TWO, 2), (FOUR, 4), (SIX, 6), (EIGHT, 8), (TEN, 10)]
 
-    number = models.SmallIntegerField(unique=True, verbose_name="Table Number")
+    number = models.SmallIntegerField(unique=True, verbose_name="Table Number", validators=[MinValueValidator(1), MaxValueValidator(20)])
     capacity = models.SmallIntegerField(verbose_name="Capacity", choices=CAPACITY_CHOICES)
     is_reserved = models.BooleanField(default=False, verbose_name="Is Reserved")
 

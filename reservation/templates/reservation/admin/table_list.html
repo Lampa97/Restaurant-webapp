@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load my_tags %}
+
+{% block title %} Table List {% endblock %}
+
+{% block content %}
+
+<h2 class="text-center text-warning">Tables</h2>
+<div class="d-flex justify-content-center align-items-center">
+
+    <a href="{% url 'reservation:table-create' %}" class="btn btn-primary">Create a table</a>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for table in tables %}
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Table №{{ table.number }}</h5>
+                <p class="card-text">Capacity: {{ table.capacity }} persons</p>
+                <p class="card-text text-center text-info">All reservations:</p>
+                <ul>
+                    {% for reservation in table_reservations|dict_key:table %}
+                    <li>{{ reservation.date }}: {{reservation.start_time}}-{{reservation.end_time}}
+                        for <span class="text-warning">{{reservation.user_name}}</span></li>
+                    {% empty %}
+                    <li>No reservations</li>
+                    {% endfor %}
+                </ul>
+
+                <a href="{% url 'reservation:table-update' table.pk %}"
+                   class="btn btn-info">Update</a>
+                <a href="{% url 'reservation:table-delete' table.pk %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
