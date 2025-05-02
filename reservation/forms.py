@@ -16,7 +16,7 @@ class TableForm(forms.ModelForm):
         widgets = {
             'capacity': forms.Select(
                 attrs={"class": "form-control",
-                       "placeholder": "Select Table capacity"}
+                       "placeholder": "Select Table capacity",}
             ),
 
         }

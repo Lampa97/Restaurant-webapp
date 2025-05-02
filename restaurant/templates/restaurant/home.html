@@ -75,21 +75,25 @@
         <div class="col-md-6">
             <form method="post" action="{% url 'restaurant:review-create' %}" class="bg-dark p-4 rounded">
                 {% csrf_token %}
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     {{ review_form.name.label_tag }}
                     {{ review_form.name }}
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 text-light">
                     {{ review_form.review_text.label_tag }}
                     {{ review_form.review_text }}
                 </div>
-                <div class="mb-3">
-                    {{ review_form.rating.label_tag }}
-
-                    {{ review_form.rating }}
-
-
-                </div>
+<div class="mb-3 text-light">
+    {{ review_form.rating.label_tag }}
+    <div class="d-flex">
+        {% for radio in review_form.rating %}
+            <div class="form-check me-3">
+                {{ radio.tag }}
+                {{ radio.choice_label }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
                 <button type="submit" class="btn btn-primary w-100">Submit Review</button>
             </form>

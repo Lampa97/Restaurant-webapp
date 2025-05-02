@@ -39,17 +39,10 @@ class Personnel(models.Model):
 
 
 class Review(models.Model):
-    RATING_CHOICES = [
-        (1, "1 Star"),
-        (2, "2 Stars"),
-        (3, "3 Stars"),
-        (4, "4 Stars"),
-        (5, "5 Stars"),
-    ]
 
     name = models.CharField(max_length=100, verbose_name="Reviewer Name")
     review_text = models.TextField(verbose_name="Review Text")
-    rating = models.PositiveSmallIntegerField(verbose_name="Rating", choices=RATING_CHOICES)
+    rating = models.PositiveSmallIntegerField(verbose_name="Rating",)
     date = models.DateTimeField(auto_now_add=True, verbose_name="Review Date")
 
     class Meta:

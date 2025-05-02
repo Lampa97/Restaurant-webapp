@@ -93,7 +93,8 @@ class ReviewForm(forms.ModelForm):
                     "style": "background-color: #f8f9fa;",
                 }
             ),
-            "rating": forms.Select(
-                attrs={"class": "form-control", "placeholder": "Select rating", "style": "background-color: #f8f9fa;"}
+            "rating": forms.RadioSelect(
+                choices=[(i, str(i)) for i in range(1, 6)],
+                attrs={"class": "form-check-input d-inline-block me-2"},
             ),
         }
