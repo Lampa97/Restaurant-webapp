@@ -7,7 +7,8 @@ from .models import Reservation, Table
 class TableForm(forms.ModelForm):
     number = forms.ChoiceField(
         widget=forms.Select(attrs={"class": "form-control",
-                            "placeholder": "Select available Table number"}),
+                            "placeholder": "Select available Table number",
+                                   "style": "background-color: #f5deb3;"}),
         label="Table",
     )
     class Meta:
@@ -16,7 +17,8 @@ class TableForm(forms.ModelForm):
         widgets = {
             'capacity': forms.Select(
                 attrs={"class": "form-control",
-                       "placeholder": "Select Table capacity",}
+                       "placeholder": "Select Table capacity",
+                       "style": "background-color: #f5deb3;"}
             ),
 
         }
@@ -39,13 +41,14 @@ class ReservationStep1Form(forms.ModelForm):
                     "type": "date",
                     "min": date.today().isoformat(),
                     "max": (date.today() + timedelta(days=6 * 30)).isoformat(),
+                    "style": "background-color: #f5deb3;"
                 }
             ),
-            'start_time': forms.TimeInput(attrs={"class": "form-control", "type": "time", "placeholder": "Select start time"}),
-            'end_time': forms.TimeInput(attrs={"class": "form-control", "type": "time", "placeholder": "Select end time"}),
-            'total_persons': forms.Select(attrs={"class": "form-control", "placeholder": "Select total persons"}),
-            'user_name': forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter your name"}),
-            'user_phone': forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter your phone number"}),
+            'start_time': forms.TimeInput(attrs={"class": "form-control", "type": "time", "placeholder": "Select start time", "style": "background-color: #f5deb3;"}),
+            'end_time': forms.TimeInput(attrs={"class": "form-control", "type": "time", "placeholder": "Select end time", "style": "background-color: #f5deb3;"}),
+            'total_persons': forms.Select(attrs={"class": "form-control", "placeholder": "Select total persons", "style": "background-color: #f5deb3;"}),
+            'user_name': forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter your name", "style": "background-color: #f5deb3;"}),
+            'user_phone': forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter your phone number", "style": "background-color: #f5deb3;"}),
         }
         labels = {
             'date': "Date",

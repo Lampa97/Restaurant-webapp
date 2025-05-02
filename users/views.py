@@ -43,7 +43,7 @@ class UsersListView(PermissionRequiredMixin, ListView):
         page_obj = paginator.get_page(page_number)
 
         for user in page_obj:
-            reservation = Reservation.objects.filter(customer=user).first()
+            reservation = Reservation.objects.filter(user=user).first()
             user.table = reservation.table if reservation else None
             user.reservation_date = reservation.date if reservation else None
 

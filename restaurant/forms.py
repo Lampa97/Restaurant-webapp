@@ -19,24 +19,24 @@ class PersonnelForm(forms.ModelForm):
                 attrs={
                     "class": "form-control",
                     "placeholder": "Enter person's full name",
-                    "style": "background-color: #f8f9fa;",
+                    "style": "background-color: #f5deb3;",
                 }
             ),
             "position": forms.Textarea(
-                attrs={"class": "form-control", "placeholder": "Enter position", "style": "background-color: #f8f9fa;"}
+                attrs={"class": "form-control", "placeholder": "Enter position", "style": "background-color: #f5deb3;"}
             ),
             "description": forms.Textarea(
                 attrs={
                     "class": "form-control",
                     "placeholder": "Enter description",
-                    "style": "background-color: #f8f9fa;",
+                    "style": "background-color: #f5deb3;",
                 }
             ),
             "quote": forms.Textarea(
-                attrs={"class": "form-control", "placeholder": "Enter quote", "style": "background-color: #f8f9fa;"}
+                attrs={"class": "form-control", "placeholder": "Enter quote", "style": "background-color: #f5deb3;"}
             ),
             "photo": forms.ClearableFileInput(
-                attrs={"class": "form-control", "placeholder": "Choose photo", "style": "background-color: #f8f9fa;"}
+                attrs={"class": "form-control", "placeholder": "Choose photo", "style": "background-color: #f5deb3;"}
             ),
         }
 
@@ -52,18 +52,18 @@ class ServiceForm(forms.ModelForm):
                 attrs={
                     "class": "form-control",
                     "placeholder": "Enter service name",
-                    "style": "background-color: #f8f9fa;",
+                    "style": "background-color: #f5deb3;",
                 }
             ),
             "description": forms.Textarea(
                 attrs={
                     "class": "form-control",
                     "placeholder": "Enter description",
-                    "style": "background-color: #f8f9fa;",
+                    "style": "background-color: #f5deb3;",
                 }
             ),
             "image": forms.ClearableFileInput(
-                attrs={"class": "form-control", "placeholder": "Choose image", "style": "background-color: #f8f9fa;"}
+                attrs={"class": "form-control", "placeholder": "Choose image", "style": "background-color: #f5deb3;"}
             ),
         }
 
@@ -83,18 +83,18 @@ class ReviewForm(forms.ModelForm):
                 attrs={
                     "class": "form-control",
                     "placeholder": "Enter your name",
-                    "style": "background-color: #f8f9fa;",
+                    "style": "background-color: #f5deb3;",
                 }
             ),
             "review_text": forms.Textarea(
                 attrs={
                     "class": "form-control",
                     "placeholder": "Write your review here",
-                    "style": "background-color: #f8f9fa;",
+                    "style": "background-color: #f5deb3;",
                 }
             ),
             "rating": forms.RadioSelect(
                 choices=[(i, str(i)) for i in range(1, 6)],
-                attrs={"class": "form-check-input d-inline-block me-2"},
+                attrs={"class": "form-check-input d-inline-block me-2", },
             ),
         }

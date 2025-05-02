@@ -175,6 +175,10 @@ class ReservationStep2View(LoginRequiredMixin, FormView):
         table.is_reserved = True
         table.save()
 
+        user = self.request.user
+        user.had_booked = True
+        user.save()
+
         # Clear session data after successful reservation
         del self.request.session["reservation_step1_data"]
 

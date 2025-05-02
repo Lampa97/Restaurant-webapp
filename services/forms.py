@@ -9,9 +9,9 @@ class MealCategoryForm(forms.ModelForm):
         model = MealCategory
         fields = ["name", "description", "image"]
         widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control"}),
-            "description": forms.Textarea(attrs={"class": "form-control"}),
-            "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "name": forms.TextInput(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
+            "description": forms.Textarea(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
+            "image": forms.ClearableFileInput(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
         }
         labels = {
             "name": "Name",
@@ -26,11 +26,11 @@ class MealForm(forms.ModelForm):
         model = Meal
         fields = ["name", "description", "price", "category", "image"]
         widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control"}),
-            "description": forms.Textarea(attrs={"class": "form-control"}),
-            "price": forms.NumberInput(attrs={"class": "form-control"}),
-            "category": forms.Select(attrs={"class": "form-control"}),
-            "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "name": forms.TextInput(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
+            "description": forms.Textarea(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
+            "price": forms.NumberInput(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
+            "category": forms.Select(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
+            "image": forms.ClearableFileInput(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
         }
         labels = {
             "name": "Name",
