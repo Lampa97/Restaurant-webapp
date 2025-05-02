@@ -6,7 +6,7 @@ from .models import Reservation, Table
 class ReservationStep1Form(forms.ModelForm):
     class Meta:
         model = Reservation
-        fields = ['date', 'start_time', 'end_time', 'total_persons']
+        fields = ['date', 'start_time', 'end_time', 'total_persons', 'user_name', 'user_phone']
         widgets = {
             'date': forms.DateInput(
                 attrs={
@@ -16,15 +16,19 @@ class ReservationStep1Form(forms.ModelForm):
                     "max": (date.today() + timedelta(days=6 * 30)).isoformat(),
                 }
             ),
-            'start_time': forms.TimeInput(attrs={"class": "form-control", "type": "time"}),
-            'end_time': forms.TimeInput(attrs={"class": "form-control", "type": "time"}),
-            'total_persons': forms.Select(attrs={"class": "form-control"}),
+            'start_time': forms.TimeInput(attrs={"class": "form-control", "type": "time", "placeholder": "Select start time"}),
+            'end_time': forms.TimeInput(attrs={"class": "form-control", "type": "time", "placeholder": "Select end time"}),
+            'total_persons': forms.Select(attrs={"class": "form-control", "placeholder": "Select total persons"}),
+            'user_name': forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter your name"}),
+            'user_phone': forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter your phone number"}),
         }
         labels = {
             'date': "Date",
             'start_time': "Start Time",
             'end_time': "End Time",
             'total_persons': "Total Persons",
+            'user_name': "User Name",
+            'user_phone': "User Phone",
         }
 
     def clean(self):

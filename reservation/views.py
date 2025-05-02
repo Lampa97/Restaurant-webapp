@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import ReservationStep1Form, ReservationStep2Form
@@ -18,20 +18,30 @@ class ReservationAdminListView(PermissionRequiredMixin, ListView):
 class ReservationAdminStep1UpdateView(PermissionRequiredMixin, UpdateView):
     model = Reservation
     form_class = ReservationStep1Form
-    template_name = "reservation/reservation1_form.html"
+    template_name = "reservation/admin/reservation1_form_update.html"
     permission_required = "reservation.can_admin_website"
 
     def form_valid(self, form):
-        # Convert date and time objects to strings before saving in the session
+        # Get the cleaned data
         cleaned_data = form.cleaned_data
+        total_persons = cleaned_data.get("total_persons")
+        table = self.object.table  # Get the table associated with the reservation
+
+        # Check if total_persons exceeds the table capacity
+        if total_persons > table.capacity:
+            form.add_error("total_persons", f"Total persons cannot exceed the table capacity of {table.capacity}.")
+            return self.form_invalid(form)
+
+        # Convert date and time objects to strings before saving in the session
         cleaned_data["date"] = cleaned_data["date"].isoformat()
         cleaned_data["start_time"] = cleaned_data["start_time"].isoformat()
         cleaned_data["end_time"] = cleaned_data["end_time"].isoformat()
         self.request.session["reservation_step1_data"] = cleaned_data
+
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("reservation:reservation-step2")
+        return reverse_lazy("reservation:reservation-list")
 
 
 class ReservationAdminDeleteView(PermissionRequiredMixin, DeleteView):

@@ -18,7 +18,7 @@
 
     <!-- Render each field with its errors -->
 
-    <div class="form-group">
+    <div class="form-group text-light">
         {{ form.date.label_tag }}
         {{ form.date }}
         {% if form.date.errors %}
@@ -30,7 +30,7 @@
         {% endif %}
     </div>
 
-    <div class="form-group">
+    <div class="form-group text-light">
         {{ form.start_time.label_tag }}
         {{ form.start_time }}
         {% if form.start_time.errors %}
@@ -42,7 +42,7 @@
         {% endif %}
     </div>
 
-    <div class="form-group">
+    <div class="form-group text-light">
         {{ form.end_time.label_tag }}
         {{ form.end_time }}
         {% if form.end_time.errors %}
@@ -54,7 +54,7 @@
         {% endif %}
     </div>
 
-    <div class="form-group">
+    <div class="form-group text-light">
         {{ form.total_persons.label_tag }}
         {{ form.total_persons }}
         {% if form.total_persons.errors %}

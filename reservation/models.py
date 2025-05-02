@@ -27,7 +27,7 @@ class Table(models.Model):
         ]
 
     def __str__(self):
-        return f"Table {self.number} - Capacity: {self.capacity}"
+        return f"Table {self.number} - Capacity: {self.capacity} Persons"
 
 
 class Reservation(models.Model):
