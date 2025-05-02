@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from .services import count_avg_rating
 from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import ReviewForm, ServiceForm, PersonnelForm
 from .models import Personnel, Review, Service
@@ -25,62 +26,71 @@ class AboutView(TemplateView):
         return context
 
 
-class ServiceListView(ListView):
+class ServiceListView(PermissionRequiredMixin, ListView):
     model = Service
     template_name = "restaurant/admin/service_list.html"
     context_object_name = "services"
+    permission_required = "restaurant.can_admin_website"
 
 
-class ServiceCreateView(CreateView):
+class ServiceCreateView(PermissionRequiredMixin, CreateView):
     model = Service
     form_class = ServiceForm
     template_name = "restaurant/admin/service_form.html"
     success_url = reverse_lazy("restaurant:service-list")
+    permission_required = "restaurant.can_admin_website"
 
 
-class ServiceUpdateView(UpdateView):
+class ServiceUpdateView(PermissionRequiredMixin, UpdateView):
     model = Service
     form_class = ServiceForm
     template_name = "restaurant/admin/service_form.html"
     success_url = reverse_lazy("restaurant:service-list")
+    permission_required = "restaurant.can_admin_website"
 
 
-class ServiceDeleteView(DeleteView):
+class ServiceDeleteView(PermissionRequiredMixin, DeleteView):
     model = Service
     template_name = "restaurant/admin/service_delete.html"
     success_url = reverse_lazy("restaurant:service-list")
+    permission_required = "restaurant.can_admin_website"
 
 
-class PersonnelListView(ListView):
+class PersonnelListView(PermissionRequiredMixin, ListView):
     model = Personnel
     template_name = "restaurant/admin/personnel_list.html"
     context_object_name = "personnel"
+    permission_required = "restaurant.can_admin_website"
 
 
-class PersonnelCreateView(CreateView):
+class PersonnelCreateView(PermissionRequiredMixin, CreateView):
     model = Personnel
     form_class = PersonnelForm
     template_name = "restaurant/admin/personnel_form.html"
     success_url = reverse_lazy("restaurant:personnel-list")
+    permission_required = "restaurant.can_admin_website"
 
 
-class PersonnelUpdateView(UpdateView):
+class PersonnelUpdateView(PermissionRequiredMixin, UpdateView):
     model = Personnel
     form_class = PersonnelForm
     template_name = "restaurant/admin/personnel_form.html"
     success_url = reverse_lazy("restaurant:personnel-list")
+    permission_required = "restaurant.can_admin_website"
 
 
-class PersonnelDeleteView(DeleteView):
+class PersonnelDeleteView(PermissionRequiredMixin, DeleteView):
     model = Personnel
     template_name = "restaurant/admin/personnel_delete.html"
     success_url = reverse_lazy("restaurant:personnel-list")
+    permission_required = "restaurant.can_admin_website"
 
 
-class ReviewListView(ListView):
+class ReviewListView(PermissionRequiredMixin, ListView):
     model = Review
     template_name = "restaurant/admin/review_list.html"
     context_object_name = "reviews"
+    permission_required = "restaurant.can_admin_website"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

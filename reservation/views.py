@@ -2,21 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import ReservationStep1Form, ReservationStep2Form
 from .models import Reservation, Table
 
 
-class ReservationAdminListView(ListView):
+class ReservationAdminListView(PermissionRequiredMixin, ListView):
     model = Reservation
     template_name = "reservation/admin/reservation_list.html"
     context_object_name = "reservations"
+    permission_required = "reservation.can_admin_website"
 
 
-class ReservationAdminStep1UpdateView(UpdateView):
+class ReservationAdminStep1UpdateView(PermissionRequiredMixin, UpdateView):
     model = Reservation
     form_class = ReservationStep1Form
     template_name = "reservation/reservation1_form.html"
+    permission_required = "reservation.can_admin_website"
 
     def form_valid(self, form):
         # Convert date and time objects to strings before saving in the session
@@ -31,13 +34,14 @@ class ReservationAdminStep1UpdateView(UpdateView):
         return reverse_lazy("reservation:reservation-step2")
 
 
-class ReservationAdminDeleteView(DeleteView):
+class ReservationAdminDeleteView(PermissionRequiredMixin, DeleteView):
     model = Reservation
     template_name = "reservation/admin/reservation_delete.html"
     success_url = reverse_lazy("reservation:reservation-list")
+    permission_required = "reservation.can_admin_website"
 
 
-class ReservationStep1View(FormView):
+class ReservationStep1View(LoginRequiredMixin, FormView):
     template_name = "reservation/reservation1_form.html"
     form_class = ReservationStep1Form
     success_url = reverse_lazy("reservation:reservation-step2")
@@ -54,7 +58,7 @@ class ReservationStep1View(FormView):
         return super().form_valid(form)
 
 
-class ReservationStep2View(FormView):
+class ReservationStep2View(LoginRequiredMixin, FormView):
     template_name = "reservation/reservation2_form.html"
     form_class = ReservationStep2Form
     success_url = reverse_lazy("restaurant:home")
@@ -105,7 +109,7 @@ class ReservationStep2View(FormView):
             start_time=step1_data["start_time"],
             end_time=step1_data["end_time"],
             total_persons=step1_data["total_persons"],
-            user=self.request.user if not self.request.user.groups.filter(name="Manager").exists() else None,
+            user=customer,
             user_name=step1_data.get("user_name"),
             user_phone=step1_data.get("user_phone"),
 

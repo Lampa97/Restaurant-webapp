@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView, View
 from django.views.generic.edit import FormView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm
 from .logger import users_logger
@@ -24,13 +25,15 @@ def email_verification(request, token):
     return redirect(reverse("users:login"))
 
 
-class AdminPanelView(TemplateView):
+class AdminPanelView(PermissionRequiredMixin, TemplateView):
     template_name = "users/admin/admin_panel.html"
+    permission_required = "users.can_admin_website"
 
 
-class UsersListView(ListView):
+class UsersListView(PermissionRequiredMixin, ListView):
     model = User
     context_object_name = "users"
+    permission_required = "users.can_admin_website"
 
     def get(self, request):
         all_users = User.objects.filter(is_staff=False, is_superuser=False)

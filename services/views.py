@@ -4,6 +4,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, T
 
 from .forms import MealCategoryForm, MealForm
 from .models import Meal, MealCategory
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class BanquetView(TemplateView):
@@ -33,63 +34,71 @@ class TourView(TemplateView):
     template_name = "services/tour.html"
 
 
-class MealListView(ListView):
+class MealListView(PermissionRequiredMixin, ListView):
     model = Meal
     template_name = "services/admin/meal_list.html"
     context_object_name = "meals"
+    permission_required = "services.can_admin_website"
 
     def get_queryset(self):
         return Meal.objects.filter(category=self.kwargs["pk"])
 
 
-class MealCreateView(CreateView):
+class MealCreateView(PermissionRequiredMixin, CreateView):
     model = Meal
     template_name = "services/admin/meal_form.html"
     form_class = MealForm
+    permission_required = "services.can_admin_website"
 
     def get_success_url(self):
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
-class MealUpdateView(UpdateView):
+class MealUpdateView(PermissionRequiredMixin, UpdateView):
     model = Meal
     template_name = "services/admin/meal_form.html"
     form_class = MealForm
+    permission_required = "services.can_admin_website"
 
     def get_success_url(self):
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
-class MealDeleteView(DeleteView):
+class MealDeleteView(PermissionRequiredMixin, DeleteView):
     model = Meal
     template_name = "services/admin/meal_delete.html"
+    permission_required = "services.can_admin_website"
 
     def get_success_url(self):
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
-class MealCategoryListView(ListView):
+class MealCategoryListView(PermissionRequiredMixin, ListView):
     model = MealCategory
     template_name = "services/admin/meal_category_list.html"
     context_object_name = "categories"
+    permission_required = "services.can_admin_website"
 
 
-class MealCategoryCreateView(CreateView):
+class MealCategoryCreateView(PermissionRequiredMixin, CreateView):
     model = MealCategory
     form_class = MealCategoryForm
     template_name = "services/admin/meal_category_form.html"
     success_url = reverse_lazy("services:meal-category-list")
+    permission_required = "services.can_admin_website"
 
 
-class MealCategoryUpdateView(UpdateView):
+class MealCategoryUpdateView(PermissionRequiredMixin, UpdateView):
     model = MealCategory
     form_class = MealCategoryForm
     template_name = "services/admin/meal_category_form.html"
     success_url = reverse_lazy("services:meal-category-list")
+    permission_required = "services.can_admin_website"
 
 
-class MealCategoryDeleteView(DeleteView):
+class MealCategoryDeleteView(PermissionRequiredMixin, DeleteView):
     model = MealCategory
     template_name = "services/admin/meal_category_delete.html"
     success_url = reverse_lazy("services:meal-category-list")
     context_object_name = "category"
+    permission_required = "services.can_admin_website"
