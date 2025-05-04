@@ -2,11 +2,11 @@
 
 {% load my_tags %}
 
-{% block title %} User Reservation List {% endblock %}
+{% block title %} User Booking History {% endblock %}
 
 {% block content %}
 
-<h2 class="text-center text-warning">My Reservations</h2>
+<h2 class="text-center text-warning">My Booking history</h2>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% if reservations %}
@@ -22,18 +22,19 @@
                         <p>{{ reservation.date }}: {{reservation.start_time}}-{{reservation.end_time}}
                         <p/>
                     </small>
+                    {% if reservation.is_active %}
                     <p class="text-body-light fst-italic text-success">Status: Active</p>
+                    {% else %}
+                    <small class="text-body-light fst-italic text-danger">Status: Finished</small>
+                    {% endif %}
                 </div>
-                <a href="{% url 'reservation:reservation-update-step1' reservation.pk %}"
-                   class="btn btn-info">Update</a>
-                <a href="{% url 'users:cancel-reservation' reservation.pk %}" class="btn btn-danger">Cancel</a>
             </div>
         </div>
     </div>
     {% endfor %}
 {% else %}
 <div class="d-flex justify-content-center align-items-center w-100">
-    <h4 class="text-center text-danger">No reservations found</h4>
+    <h4 class="text-center text-danger">No previous reservations found</h4>
 </div>
 {% endif %}
 </div>

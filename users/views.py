@@ -1,4 +1,6 @@
 import secrets
+
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.contrib import messages
@@ -52,7 +54,7 @@ class UserReservationListView(LoginRequiredMixin, ListView):
     context_object_name = "reservations"
 
     def get_queryset(self):
-        return Reservation.objects.filter(user=self.request.user).order_by("-date", "-start_time")
+        return Reservation.objects.filter(user=self.request.user, is_active=True).order_by("-date", "-start_time")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,6 +66,7 @@ class CancelReservationView(LoginRequiredMixin, DeleteView):
     template_name = "users/personal_cabinet/cancel_reservation.html"
 
     def get_success_url(self):
+        messages.success(self.request, "Reservation successfully canceled.")
         return reverse_lazy("users:personal-cabinet", kwargs={"pk": self.object.pk})
 
     def get_object(self, queryset=None):
@@ -72,10 +75,19 @@ class CancelReservationView(LoginRequiredMixin, DeleteView):
             raise PermissionDenied
         return obj
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(request, "Reservation successfully canceled.")
-        return super().delete(request, *args, **kwargs)
 
+class BookingHistoryView(LoginRequiredMixin, ListView):
+    model = Reservation
+    template_name = "users/personal_cabinet/booking_history.html"
+    context_object_name = "reservations"
+
+    def get_queryset(self):
+        return Reservation.objects.filter(user=self.request.user).order_by("-date", "-start_time")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        return context
 
 class AdminPanelView(PermissionRequiredMixin, TemplateView):
     template_name = "users/admin/admin_panel.html"

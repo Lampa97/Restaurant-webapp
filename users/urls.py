@@ -19,4 +19,5 @@ urlpatterns = [
     path("user/<int:pk>/update/", views.EditProfileUpdateView.as_view(), name="user-profile-update"),
     path("user/reservations/", views.UserReservationListView.as_view(), name="user-reservations"),
     path("user/reservations/<int:pk>/cancel/", views.CancelReservationView.as_view(), name="cancel-reservation"),
+    path("user/reservations/history/", views.BookingHistoryView.as_view(), name="booking-history"),
 ]
