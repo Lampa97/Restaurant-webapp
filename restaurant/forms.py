@@ -83,7 +83,7 @@ class ReviewForm(forms.ModelForm):
                 attrs={
                     "class": "form-control",
                     "placeholder": "Enter your name",
-                    "style": "background-color: #f5deb3;",
+                    "style": "background-color: #f5deb3; ",
                 }
             ),
             "review_text": forms.Textarea(

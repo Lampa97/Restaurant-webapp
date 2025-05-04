@@ -15,4 +15,5 @@ urlpatterns = [
     ),
     path("admin/", views.AdminPanelView.as_view(), name="admin"),
     path("admin/all-users/", views.UsersListView.as_view(), name="all-users"),
+    path("personal-cabinet/<int:pk>/", views.PersonalCabinetView.as_view(), name="personal-cabinet"),
 ]

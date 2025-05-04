@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2 class="text-center text-warning "> Personnel Form </h2>
-            <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+            <form method="post" action="" class="form-floating bg-dark p-4 rounded" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3 text-light">
                     {{ form.name.label_tag }}

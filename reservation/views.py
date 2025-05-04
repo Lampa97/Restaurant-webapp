@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView, TemplateView
@@ -64,6 +65,9 @@ class ReservationAdminStep1UpdateView(PermissionRequiredMixin, UpdateView):
     def form_valid(self, form):
         # Get the cleaned data
         cleaned_data = form.cleaned_data
+        date = cleaned_data["date"]
+        start_time = cleaned_data["start_time"]
+        end_time = cleaned_data["end_time"]
         total_persons = cleaned_data.get("total_persons")
         table = self.object.table  # Get the table associated with the reservation
 
@@ -72,10 +76,23 @@ class ReservationAdminStep1UpdateView(PermissionRequiredMixin, UpdateView):
             form.add_error("total_persons", f"Total persons cannot exceed the table capacity of {table.capacity}.")
             return self.form_invalid(form)
 
+        # Check if the reservation duration exceeds 4 hours
+        start_datetime = datetime.combine(date, start_time)
+        end_datetime = datetime.combine(date, end_time)
+        duration = (end_datetime - start_datetime).total_seconds() / 3600
+        if duration > 4:
+            form.add_error("end_time", "Reservation duration cannot exceed 4 hours.")
+            return self.form_invalid(form)
+
+        # Check if the user already has a reservation for the selected date
+        if Reservation.objects.filter(user=self.object.user, date=date).exclude(pk=self.object.pk).exists():
+            form.add_error("date", "This user already has a reservation for this date.")
+            return self.form_invalid(form)
+
         # Convert date and time objects to strings before saving in the session
-        cleaned_data["date"] = cleaned_data["date"].isoformat()
-        cleaned_data["start_time"] = cleaned_data["start_time"].isoformat()
-        cleaned_data["end_time"] = cleaned_data["end_time"].isoformat()
+        cleaned_data["date"] = date.isoformat()
+        cleaned_data["start_time"] = start_time.isoformat()
+        cleaned_data["end_time"] = end_time.isoformat()
         self.request.session["reservation_step1_data"] = cleaned_data
 
         return super().form_valid(form)
@@ -97,14 +114,27 @@ class ReservationStep1View(LoginRequiredMixin, FormView):
     success_url = reverse_lazy("reservation:reservation-step2")
 
     def form_valid(self, form):
-        reservation = Reservation.objects.filter(user=self.request.user).first()
-        if reservation:
-            messages.error(self.request, f"You may have only 1 reservation at a time. You current reservation is on {reservation.date} from {reservation.start_time} to {reservation.end_time} at table {reservation.table}.")
-            return HttpResponseRedirect(reverse_lazy("restaurant:home"))
-
 
         # Convert date and time objects to strings before saving in the session
         cleaned_data = form.cleaned_data
+        date = cleaned_data["date"]
+        start_time = cleaned_data["start_time"]
+        end_time = cleaned_data["end_time"]
+
+
+        # Check if the reservation duration exceeds 4 hours
+        start_datetime = datetime.combine(date, start_time)
+        end_datetime = datetime.combine(date, end_time)
+        duration = (end_datetime - start_datetime).total_seconds() / 3600
+        if duration > 4:
+            form.add_error("end_time", "Reservation duration cannot exceed 4 hours.")
+            return self.form_invalid(form)
+
+        # Check if the user already has a reservation for the selected date
+        if Reservation.objects.filter(user=self.request.user, date=date).exists():
+            form.add_error("date", "You already have a reservation for this date.")
+            return self.form_invalid(form)
+
         cleaned_data["date"] = cleaned_data["date"].isoformat()
         cleaned_data["start_time"] = cleaned_data["start_time"].isoformat()
         cleaned_data["end_time"] = cleaned_data["end_time"].isoformat()

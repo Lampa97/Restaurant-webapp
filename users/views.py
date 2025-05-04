@@ -25,6 +25,14 @@ def email_verification(request, token):
     return redirect(reverse("users:login"))
 
 
+class PersonalCabinetView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = "users/personal_cabinet.html"
+    context_object_name = "user"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
 class AdminPanelView(PermissionRequiredMixin, TemplateView):
     template_name = "users/admin/admin_panel.html"
     permission_required = "users.can_admin_website"

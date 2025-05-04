@@ -79,7 +79,7 @@ class ReservationStep1Form(forms.ModelForm):
             raise ValidationError(f"End time must be between {min_end_time.strftime('%I:%M %p')} and {max_end_time.strftime('%I:%M %p')}.")
 
         # Ensure start_time is at least 1 hour before end_time
-        if start_time and end_time and (end_time <= (time(start_time.hour + 1, start_time.minute) if start_time.hour < 23 else time(0, 0))):
+        if start_time and end_time and (end_time < (time(start_time.hour + 1, start_time.minute) if start_time.hour < 23 else time(0, 0))):
             raise ValidationError("End time must be at least 1 hour after start time.")
 
         return cleaned_data
@@ -88,7 +88,7 @@ class ReservationStep1Form(forms.ModelForm):
 class ReservationStep2Form(forms.ModelForm):
     table = forms.ModelChoiceField(
         queryset=Table.objects.none(),
-        widget=forms.Select(attrs={"class": "form-control"}),
+        widget=forms.Select(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),
         label="Table",
     )
 

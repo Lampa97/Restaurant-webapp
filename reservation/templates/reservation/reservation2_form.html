@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+            <form method="post" action="" class="form-floating bg-dark p-4 rounded" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
                 <div class="alert alert-danger">

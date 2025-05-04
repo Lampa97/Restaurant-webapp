@@ -46,7 +46,7 @@
             {% endif %}
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="navbar-brand" href="{% url 'restaurant:home' %}">Personal cabinet</a>
+                <a class="navbar-brand" href="{% url 'users:personal-cabinet' user.pk %}">Personal cabinet</a>
             </li>
 
             <li class="nav-item">
