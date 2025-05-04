@@ -60,7 +60,13 @@ class ReservationAdminStep1UpdateView(PermissionRequiredMixin, UpdateView):
     model = Reservation
     form_class = ReservationStep1Form
     template_name = "reservation/admin/reservation1_form_update.html"
-    permission_required = "reservation.can_admin_website"
+
+    def get_permission_required(self):
+        # Check if the user is a manager or admin
+        if self.request.user.groups.filter(name="Manager").exists():
+            return ["reservation.can_admin_website"]
+        else:
+            return []
 
     def form_valid(self, form):
         # Get the cleaned data
@@ -98,7 +104,10 @@ class ReservationAdminStep1UpdateView(PermissionRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("reservation:reservation-list")
+        if self.request.user.groups.filter(name="Manager").exists():
+            return reverse_lazy("reservation:reservation-list")
+        else:
+            return reverse_lazy("users:user-reservations")
 
 
 class ReservationAdminDeleteView(PermissionRequiredMixin, DeleteView):
@@ -106,6 +115,8 @@ class ReservationAdminDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = "reservation/admin/reservation_delete.html"
     success_url = reverse_lazy("reservation:reservation-list")
     permission_required = "reservation.can_admin_website"
+
+
 
 
 class ReservationStep1View(LoginRequiredMixin, FormView):
@@ -167,6 +178,9 @@ class ReservationStep2View(LoginRequiredMixin, FormView):
         ).values_list("table_id", flat=True)
 
         available_tables = Table.objects.exclude(id__in=reserved_tables).filter(capacity__gte=total_persons)
+        if not available_tables.exists():
+            messages.error(self.request, "No tables are available for the selected time and date.")
+            return HttpResponseRedirect(reverse_lazy("reservation:reservation-step1"))
         kwargs["available_tables"] = available_tables
 
         # Pass step 1 data to the form for validation

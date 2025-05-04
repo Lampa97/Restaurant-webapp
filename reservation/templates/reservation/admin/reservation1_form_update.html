@@ -17,6 +17,7 @@
                 {% endif %}
 
                 <!-- Render each field with its errors -->
+                {% if perms.reservation.can_admin_website %}
                 <div class="form-group text-light">
                     {{ form.user_name.label_tag }}
                     {{ form.user_name }}
@@ -40,7 +41,7 @@
                     </div>
                     {% endif %}
                 </div>
-
+                {% endif %}
                 <div class="form-group text-light">
                     {{ form.date.label_tag }}
                     {{ form.date }}

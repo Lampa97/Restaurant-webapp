@@ -5,9 +5,58 @@
 {% block content %}
 <h4 class="text-center text-warning">Registration Page</h4>
 <div class="d-flex justify-content-center align-items-center">
-    <form method="post" class="p-4 border rounded bg-light">
+    <form method="post" class="form-floating bg-dark p-4 rounded">
         {% csrf_token %}
-        {{ form.as_table }}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        <div class="mb-3 text-light">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="text-danger">
+                {{ form.email.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 text-light">
+            {{ form.full_name.label_tag }}
+            {{ form.full_name }}
+            {% if form.full_name.errors %}
+            <div class="text-danger">
+                {{ form.full_name.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 text-light">
+            {{ form.phone_number.label_tag }}
+            {{ form.phone_number }}
+            {% if form.phone_number.errors %}
+            <div class="text-danger">
+                {{ form.phone_number.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 text-light">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </div>
+        {% if form.password1.errors %}
+        <div class="text-danger">
+            {{ form.password1.errors }}
+        </div>
+        {% endif %}
+        <div class="mb-3 text-light">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <div class="text-danger">
+                {{ form.password2.errors }}
+            </div>
+            {% endif %}
+        </div>
         <button class="btn btn-success w-100" type="submit">Sign up</button>
     </form>
 </div>

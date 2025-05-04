@@ -15,9 +15,16 @@
 
 <h4 class="text-center text-warning">Login Page</h4>
 <div class="d-flex justify-content-center align-items-center">
-    <form method="post" class="p-4 border rounded bg-light">
+    <form method="post" class="form-floating bg-dark p-4 rounded">
         {% csrf_token %}
-        {{ form.as_table }}
+        <div class="mb-3 text-light">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="mb-3 text-light">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
         <button class="btn btn-success w-100" type="submit">Login</button>
     </form>
 </div>

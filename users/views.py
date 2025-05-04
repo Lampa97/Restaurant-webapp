@@ -6,11 +6,11 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView, TemplateView, UpdateView, View
+from django.views.generic import DetailView, ListView, TemplateView, UpdateView, View, DeleteView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
-from .forms import CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm
+from .services import get_closest_booking_date
+from .forms import CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm, UserUpdateForm
 from .logger import users_logger
 from .models import User
 from reservation.models import Reservation
@@ -27,11 +27,55 @@ def email_verification(request, token):
 
 class PersonalCabinetView(LoginRequiredMixin, DetailView):
     model = User
-    template_name = "users/personal_cabinet.html"
+    template_name = "users/personal_cabinet/personal_cabinet.html"
     context_object_name = "user"
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["closest_booking_date"] = get_closest_booking_date(self.request.user)
+        return context
+
+class EditProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = "users/personal_cabinet/edit_profile.html"
+
+    def get_success_url(self):
+        return reverse_lazy("users:personal-cabinet", kwargs={"pk": self.object.pk})
+
+class UserReservationListView(LoginRequiredMixin, ListView):
+    model = Reservation
+    template_name = "users/personal_cabinet/user_reservation_list.html"
+    context_object_name = "reservations"
+
+    def get_queryset(self):
+        return Reservation.objects.filter(user=self.request.user).order_by("-date", "-start_time")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        return context
+
+class CancelReservationView(LoginRequiredMixin, DeleteView):
+    model = Reservation
+    template_name = "users/personal_cabinet/cancel_reservation.html"
+
+    def get_success_url(self):
+        return reverse_lazy("users:personal-cabinet", kwargs={"pk": self.object.pk})
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise PermissionDenied
+        return obj
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, "Reservation successfully canceled.")
+        return super().delete(request, *args, **kwargs)
+
 
 class AdminPanelView(PermissionRequiredMixin, TemplateView):
     template_name = "users/admin/admin_panel.html"
