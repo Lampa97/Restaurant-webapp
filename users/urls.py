@@ -15,9 +15,12 @@ urlpatterns = [
     ),
     path("admin/", views.AdminPanelView.as_view(), name="admin"),
     path("admin/all-users/", views.UsersListView.as_view(), name="all-users"),
+    path("admin/user/<int:user_id>/booking-history/", views.BookingHistoryAdminView.as_view(), name="user-booking-history"),
+    path("admin/user/<int:pk>/change-status/", views.ChangeUserStatusView.as_view(), name="change-status"),
     path("personal-cabinet/<int:pk>/", views.PersonalCabinetView.as_view(), name="personal-cabinet"),
     path("user/<int:pk>/update/", views.EditProfileUpdateView.as_view(), name="user-profile-update"),
     path("user/reservations/", views.UserReservationListView.as_view(), name="user-reservations"),
     path("user/reservations/<int:pk>/cancel/", views.CancelReservationView.as_view(), name="cancel-reservation"),
     path("user/reservations/history/", views.BookingHistoryView.as_view(), name="booking-history"),
+
 ]

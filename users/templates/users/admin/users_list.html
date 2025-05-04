@@ -23,7 +23,14 @@
                 {% else %}
                 <p class="card-text text-danger">User doesn't have current bookings</p>
                 {% endif %}
-                <a href="#" class="btn btn-info">Booking history</a>
+                <a href="{% url 'users:user-booking-history' user.id %}" class="btn btn-info me-2 mb-2">Booking history</a>
+<p class="text-info mb-2">User status: {% if user.is_active %}<span class="text-success">Active</span>{% else %}<span class="text-danger">Inactive{% endif %}</span></p>
+<form method="post" action="{% url 'users:change-status' user.pk %}">
+    {% csrf_token %}
+    <button type="submit" class="btn {% if user.is_active %}btn-danger{% else %}btn-success{% endif %} me-2 mb-2">
+        {% if user.is_active %}Block user{% else %}Unblock user{% endif %}
+    </button>
+</form>
             </div>
         </div>
     </div>

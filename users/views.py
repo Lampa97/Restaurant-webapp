@@ -94,6 +94,33 @@ class AdminPanelView(PermissionRequiredMixin, TemplateView):
     permission_required = "users.can_admin_website"
 
 
+class ChangeUserStatusView(PermissionRequiredMixin, View):
+    permission_required = "users.can_block_user"
+
+    def post(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        if user == request.user:
+            messages.warning(request, "You cannot block yourself.")
+            return redirect("users:all-users")
+        user.is_active = not user.is_active
+        user.save()
+        users_logger.info(f"User {user} status changed.")
+        return redirect("users:all-users")
+
+class BookingHistoryAdminView(LoginRequiredMixin, ListView):
+    model = Reservation
+    template_name = 'users/admin/booking_history.html'
+    context_object_name = 'reservations'
+
+    def get_queryset(self):
+        user = get_object_or_404(User, id=self.kwargs['user_id'])
+        return Reservation.objects.filter(user=user).order_by('-date', '-start_time')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = get_object_or_404(User, id=self.kwargs['user_id'])
+        return context
+
 class UsersListView(PermissionRequiredMixin, ListView):
     model = User
     context_object_name = "users"
