@@ -132,6 +132,13 @@ CELERY_TASK_TRACK_STARTED = True
 
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
+CELERY_BEAT_SCHEDULE = {
+    "check_booking_status": {
+        "task": "reservation.tasks.check_booking_status",
+        "schedule": timedelta(hours=1),
+    },
+}
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
