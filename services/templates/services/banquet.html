@@ -1,1 +1,26 @@
 {% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Banquet{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-warning text-decoration-underline fst-italic">Banquet</h1>
+<div class="card mb-3 bg-dark text-light">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+        <h3 class="card-title text-center fst-italic">Celebrate in Style</h3>
+        <p class="card-text text-center">Planning a wedding, birthday, or corporate event? Our banquet hall offers elegant space, personalized service, and delicious menu options to match your occasion.</p>
+        <h4 class="card-text text-center fst-italic"> Main features:</h4>
+        <div class="d-flex justify-content-center">
+            <ul class="list-group w-25 text-center list-group-flush">
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🍽 Buffet, plated, or custom menu packages</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🎶 Live music and DJ options</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🪑 Seating for up to 100 guests</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🎈 Personalized decoration themes</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">📅 Dedicated event coordinator</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

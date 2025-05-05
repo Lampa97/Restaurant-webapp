@@ -5,8 +5,8 @@
 {% block title %} {{ meals.0.category }} {% endblock %}
 
 {% block content %}
-
-<h1 class="text-center text-warning">{{ meals.0.category }} Menu</h1>
+<a href="{% url 'services:menu' %}" class="btn btn-secondary">Back to menu</a>
+<h1 class="text-center text-warning text-decoration-underline fst-italic">{{ meals.0.category }} Menu</h1>
 <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for meal in meals %}
     <div class="col d-flex align-items-stretch">
