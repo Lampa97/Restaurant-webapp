@@ -12,7 +12,7 @@ class MealService:
     @staticmethod
     def get_all_meals_in_category(category):
         if CACHE_ENABLED:
-            key = f"meals_in_category_{category.pk}"
+            key = f"meals_in_category_{category}"
             meals = cache.get(key)
             if meals is not None:
                 return meals

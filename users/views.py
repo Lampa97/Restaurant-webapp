@@ -60,7 +60,7 @@ class EditProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy("users:personal-cabinet", kwargs={"pk": self.object.pk})
 
-@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
+
 class UserReservationListView(LoginRequiredMixin, ListView):
     model = Reservation
     template_name = "users/personal_cabinet/user_reservation_list.html"

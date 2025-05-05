@@ -4,11 +4,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.generic import CreateView, DeleteView, FormView, ListView, TemplateView, UpdateView
+from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 
 from .forms import ReservationStep1Form, ReservationStep2Form, TableForm
 from .models import Reservation, Table

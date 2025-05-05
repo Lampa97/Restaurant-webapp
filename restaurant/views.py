@@ -12,7 +12,6 @@ from .services import count_avg_rating
 CACHE_TIMEOUT = settings.CACHE_TIMEOUT if settings.CACHE_ENABLED else 0
 
 
-@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class HomeView(TemplateView):
     template_name = "restaurant/home.html"
 

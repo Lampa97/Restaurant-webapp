@@ -39,12 +39,16 @@
 
 
         <ul class="nav justify-content-end">
+
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <h4 class="text-warning px-3">Welcome, {{ user.full_name }}!</h4>
+            </li>
             {% if user.is_staff %}
             <li class="nav-item">
                 <a class="navbar-brand" href="{% url 'users:admin' %}">Admin</a>
             </li>
             {% endif %}
-            {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="navbar-brand" href="{% url 'users:personal-cabinet' user.pk %}">Personal cabinet</a>
             </li>
