@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "users",
     "django_celery_beat",
     "django_celery_results",
-    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -206,3 +205,14 @@ LOGIN_REDIRECT_URL = "restaurant:home"
 LOGIN_URL = "users:login"
 
 LOGOUT_REDIRECT_URL = "restaurant:home"
+
+CACHE_ENABLED = True
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://localhost:6379/1",
+        }
+    }
+
