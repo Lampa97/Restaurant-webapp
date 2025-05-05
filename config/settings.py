@@ -1,5 +1,6 @@
 import logging
 import os
+from datetime import timedelta
 from pathlib import Path
 
 import colorlog
@@ -115,7 +116,7 @@ LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
-TIME_INPUT_FORMATS = ['%H:%M', '%I:%M %p']# 24-hour and 12-hour (AM/PM) formats
+TIME_INPUT_FORMATS = ["%H:%M", "%I:%M %p"]  # 24-hour and 12-hour (AM/PM) formats
 
 USE_I18N = True
 
@@ -215,6 +216,8 @@ LOGOUT_REDIRECT_URL = "restaurant:home"
 
 CACHE_ENABLED = True
 
+CACHE_TIMEOUT = 60 * 15  # 15 minutes
+
 if CACHE_ENABLED:
     CACHES = {
         "default": {
@@ -222,4 +225,3 @@ if CACHE_ENABLED:
             "LOCATION": "redis://localhost:6379/1",
         }
     }
-

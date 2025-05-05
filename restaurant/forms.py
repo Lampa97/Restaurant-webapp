@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Review, Service, Personnel
+from .models import Personnel, Review, Service
 
 
 class PersonnelForm(forms.ModelForm):
@@ -95,6 +95,8 @@ class ReviewForm(forms.ModelForm):
             ),
             "rating": forms.RadioSelect(
                 choices=[(i, str(i)) for i in range(1, 6)],
-                attrs={"class": "form-check-input d-inline-block me-2", },
+                attrs={
+                    "class": "form-check-input d-inline-block me-2",
+                },
             ),
         }

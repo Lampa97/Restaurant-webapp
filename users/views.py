@@ -1,22 +1,33 @@
 import secrets
 
-from django.core.exceptions import PermissionDenied
-from django.core.paginator import Paginator
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView, TemplateView, UpdateView, View, DeleteView
+from django.views.generic import DeleteView, DetailView, ListView, TemplateView, UpdateView, View
 from django.views.generic.edit import FormView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from .services import get_closest_booking_date
-from .forms import CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm, UserUpdateForm
-from .logger import users_logger
-from .models import User
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from reservation.models import Reservation
 
+from .forms import (
+    CustomLoginForm,
+    CustomUserCreationForm,
+    PasswordResetConfirmForm,
+    PasswordResetRequestForm,
+    UserUpdateForm,
+)
+from .logger import users_logger
+from .models import User
+from .services import get_closest_booking_date
+
+
+CACHE_TIMEOUT = settings.CACHE_TIMEOUT if settings.CACHE_ENABLED else 0
 
 def email_verification(request, token):
     user = get_object_or_404(User, token=token)
@@ -26,7 +37,7 @@ def email_verification(request, token):
     messages.success(request, "You successfully confirmed your email. Now you can login.")
     return redirect(reverse("users:login"))
 
-
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class PersonalCabinetView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "users/personal_cabinet/personal_cabinet.html"
@@ -40,6 +51,7 @@ class PersonalCabinetView(LoginRequiredMixin, DetailView):
         context["closest_booking_date"] = get_closest_booking_date(self.request.user)
         return context
 
+
 class EditProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
@@ -48,6 +60,7 @@ class EditProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy("users:personal-cabinet", kwargs={"pk": self.object.pk})
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class UserReservationListView(LoginRequiredMixin, ListView):
     model = Reservation
     template_name = "users/personal_cabinet/user_reservation_list.html"
@@ -60,6 +73,7 @@ class UserReservationListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
         return context
+
 
 class CancelReservationView(LoginRequiredMixin, DeleteView):
     model = Reservation
@@ -75,7 +89,15 @@ class CancelReservationView(LoginRequiredMixin, DeleteView):
             raise PermissionDenied
         return obj
 
+    def delete(self, request, *args, **kwargs):
+        """Changing the status of user(had_booked) to False if he has no active reservations"""
+        user = self.request.user
+        user_reservations = Reservation.objects.filter(user=user, is_active=True)
+        if user_reservations.count() < 1:
+            user.had_booked = False
+            user.save()
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class BookingHistoryView(LoginRequiredMixin, ListView):
     model = Reservation
     template_name = "users/personal_cabinet/booking_history.html"
@@ -89,6 +111,7 @@ class BookingHistoryView(LoginRequiredMixin, ListView):
         context["user"] = self.request.user
         return context
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class AdminPanelView(PermissionRequiredMixin, TemplateView):
     template_name = "users/admin/admin_panel.html"
     permission_required = "users.can_admin_website"
@@ -107,20 +130,22 @@ class ChangeUserStatusView(PermissionRequiredMixin, View):
         users_logger.info(f"User {user} status changed.")
         return redirect("users:all-users")
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class BookingHistoryAdminView(LoginRequiredMixin, ListView):
     model = Reservation
-    template_name = 'users/admin/booking_history.html'
-    context_object_name = 'reservations'
+    template_name = "users/admin/booking_history.html"
+    context_object_name = "reservations"
 
     def get_queryset(self):
-        user = get_object_or_404(User, id=self.kwargs['user_id'])
-        return Reservation.objects.filter(user=user).order_by('-date', '-start_time')
+        user = get_object_or_404(User, id=self.kwargs["user_id"])
+        return Reservation.objects.filter(user=user).order_by("-date", "-start_time")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user'] = get_object_or_404(User, id=self.kwargs['user_id'])
+        context["user"] = get_object_or_404(User, id=self.kwargs["user_id"])
         return context
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class UsersListView(PermissionRequiredMixin, ListView):
     model = User
     context_object_name = "users"

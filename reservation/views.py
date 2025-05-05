@@ -1,15 +1,22 @@
-from django.shortcuts import render
-from django.contrib import messages
 from datetime import datetime
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView, TemplateView
+
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.generic import CreateView, DeleteView, FormView, ListView, TemplateView, UpdateView
 
 from .forms import ReservationStep1Form, ReservationStep2Form, TableForm
 from .models import Reservation, Table
 
+CACHE_TIMEOUT = settings.CACHE_TIMEOUT if settings.CACHE_ENABLED else 0
 
+
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class TableListView(PermissionRequiredMixin, ListView):
     model = Table
     template_name = "reservation/admin/table_list.html"
@@ -19,9 +26,7 @@ class TableListView(PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tables = context["tables"]
-        table_reservations = {
-            table: table.reservations.all() for table in tables
-        }
+        table_reservations = {table: table.reservations.all() for table in tables}
         context["table_reservations"] = table_reservations
         return context
 
@@ -49,6 +54,7 @@ class TableDeleteView(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy("reservation:table-list")
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class ReservationAdminListView(PermissionRequiredMixin, ListView):
     model = Reservation
     template_name = "reservation/admin/reservation_list.html"
@@ -116,7 +122,12 @@ class ReservationAdminDeleteView(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy("reservation:reservation-list")
     permission_required = "reservation.can_admin_website"
 
-
+    def delete(self, request, *args, **kwargs):
+        user = self.object.user
+        user_reservations = Reservation.objects.filter(user=user, is_active=True)
+        if user_reservations.count() < 1:
+            user.had_booked = False
+            user.save()
 
 
 class ReservationStep1View(LoginRequiredMixin, FormView):
@@ -131,7 +142,6 @@ class ReservationStep1View(LoginRequiredMixin, FormView):
         date = cleaned_data["date"]
         start_time = cleaned_data["start_time"]
         end_time = cleaned_data["end_time"]
-
 
         # Check if the reservation duration exceeds 4 hours
         start_datetime = datetime.combine(date, start_time)
@@ -149,8 +159,12 @@ class ReservationStep1View(LoginRequiredMixin, FormView):
         cleaned_data["date"] = cleaned_data["date"].isoformat()
         cleaned_data["start_time"] = cleaned_data["start_time"].isoformat()
         cleaned_data["end_time"] = cleaned_data["end_time"].isoformat()
-        cleaned_data["user_name"] = None if self.request.user.groups.filter(name="Manager").exists() else self.request.user.full_name
-        cleaned_data["user_phone"] = None if self.request.user.groups.filter(name="Manager").exists() else self.request.user.phone_number
+        cleaned_data["user_name"] = (
+            None if self.request.user.groups.filter(name="Manager").exists() else self.request.user.full_name
+        )
+        cleaned_data["user_phone"] = (
+            None if self.request.user.groups.filter(name="Manager").exists() else self.request.user.phone_number
+        )
         self.request.session["reservation_step1_data"] = cleaned_data
         return super().form_valid(form)
 
@@ -212,7 +226,6 @@ class ReservationStep2View(LoginRequiredMixin, FormView):
             user=customer,
             user_name=step1_data.get("user_name"),
             user_phone=step1_data.get("user_phone"),
-
         )
 
         # Mark the table as reserved

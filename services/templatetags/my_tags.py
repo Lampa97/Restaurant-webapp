@@ -9,6 +9,7 @@ def media_filter(path):
         return f"/media/{path}"
     return "#"
 
+
 @register.filter()
 def dict_key(dictionary, key):
     """Retrieve a value from a dictionary by key."""

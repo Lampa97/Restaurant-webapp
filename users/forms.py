@@ -21,13 +21,21 @@ class CustomUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        self.fields["email"].widget.attrs.update({"class": "form-control", "placeholder": "Enter your email", "style": "background-color: #f5deb3;"})
-        self.fields["full_name"].widget.attrs.update({"class": "form-control", "placeholder": "Enter your full name", "style": "background-color: #f5deb3;"})
+        self.fields["email"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Enter your email", "style": "background-color: #f5deb3;"}
+        )
+        self.fields["full_name"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Enter your full name", "style": "background-color: #f5deb3;"}
+        )
         self.fields["phone_number"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Enter your phone number", "style": "background-color: #f5deb3;"}
         )
-        self.fields["password1"].widget.attrs.update({"class": "form-control", "placeholder": "Enter your password", "style": "background-color: #f5deb3;"})
-        self.fields["password2"].widget.attrs.update({"class": "form-control", "placeholder": "Confirm your password", "style": "background-color: #f5deb3;"})
+        self.fields["password1"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Enter your password", "style": "background-color: #f5deb3;"}
+        )
+        self.fields["password2"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Confirm your password", "style": "background-color: #f5deb3;"}
+        )
 
 
 class PasswordResetRequestForm(forms.Form):
@@ -59,7 +67,10 @@ class PasswordResetConfirmForm(forms.Form):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["full_name", "phone_number",]
+        fields = [
+            "full_name",
+            "phone_number",
+        ]
         labels = {
             "full_name": "Full Name",
             "phone_number": "Phone number",
@@ -73,5 +84,10 @@ class UserUpdateForm(forms.ModelForm):
                 }
             ),
             "phone_number": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter your phone_number", "style": "background-color: #f5deb3;"}
-            )}
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter your phone_number",
+                    "style": "background-color: #f5deb3;",
+                }
+            ),
+        }

@@ -1,12 +1,19 @@
+from django.conf import settings
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from .forms import MealCategoryForm, MealForm
 from .models import Meal, MealCategory
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from .services import MealCategoryService, MealService
+
+CACHE_TIMEOUT = settings.CACHE_TIMEOUT if settings.CACHE_ENABLED else 0
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class BanquetView(TemplateView):
     template_name = "services/banquet.html"
 
@@ -16,6 +23,9 @@ class MenuView(ListView):
     template_name = "services/menu.html"
     context_object_name = "categories"
 
+    def get_queryset(self):
+        return MealCategoryService.get_all_categories()
+
 
 class MenuDetailView(ListView):
     model = Meal
@@ -23,13 +33,15 @@ class MenuDetailView(ListView):
     context_object_name = "meals"
 
     def get_queryset(self):
-        return Meal.objects.filter(category=self.kwargs["pk"])
+        return MealService.get_all_meals_in_category(category=self.kwargs["pk"])
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class DeliveryView(TemplateView):
     template_name = "services/delivery.html"
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class TourView(TemplateView):
     template_name = "services/tour.html"
 
@@ -41,7 +53,7 @@ class MealListView(PermissionRequiredMixin, ListView):
     permission_required = "services.can_admin_website"
 
     def get_queryset(self):
-        return Meal.objects.filter(category=self.kwargs["pk"])
+        return MealService.get_all_meals_in_category(category=self.kwargs["pk"])
 
 
 class MealCreateView(PermissionRequiredMixin, CreateView):
@@ -78,6 +90,9 @@ class MealCategoryListView(PermissionRequiredMixin, ListView):
     template_name = "services/admin/meal_category_list.html"
     context_object_name = "categories"
     permission_required = "services.can_admin_website"
+
+    def get_queryset(self):
+        return MealCategoryService.get_all_categories()
 
 
 class MealCategoryCreateView(PermissionRequiredMixin, CreateView):

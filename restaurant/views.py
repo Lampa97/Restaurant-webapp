@@ -1,12 +1,18 @@
-from django.urls import reverse_lazy
-from .services import count_avg_rating
-from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView, ListView
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.generic import CreateView, DeleteView, ListView, TemplateView, UpdateView
 
-from .forms import ReviewForm, ServiceForm, PersonnelForm
+from .forms import PersonnelForm, ReviewForm, ServiceForm
 from .models import Personnel, Review, Service
+from .services import count_avg_rating
+
+CACHE_TIMEOUT = settings.CACHE_TIMEOUT if settings.CACHE_ENABLED else 0
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class HomeView(TemplateView):
     template_name = "restaurant/home.html"
 
@@ -17,6 +23,7 @@ class HomeView(TemplateView):
         return context
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class AboutView(TemplateView):
     template_name = "restaurant/about.html"
 
@@ -26,6 +33,7 @@ class AboutView(TemplateView):
         return context
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class ServiceListView(PermissionRequiredMixin, ListView):
     model = Service
     template_name = "restaurant/admin/service_list.html"
@@ -56,6 +64,7 @@ class ServiceDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "restaurant.can_admin_website"
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class PersonnelListView(PermissionRequiredMixin, ListView):
     model = Personnel
     template_name = "restaurant/admin/personnel_list.html"
@@ -86,6 +95,7 @@ class PersonnelDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "restaurant.can_admin_website"
 
 
+@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class ReviewListView(PermissionRequiredMixin, ListView):
     model = Review
     template_name = "restaurant/admin/review_list.html"

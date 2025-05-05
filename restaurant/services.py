@@ -1,5 +1,6 @@
-from .models import Review
 from django.db.models import Sum
+
+from .models import Review
 
 
 def count_avg_rating():

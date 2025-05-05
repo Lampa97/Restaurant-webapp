@@ -14,7 +14,9 @@ class Table(models.Model):
 
     CAPACITY_CHOICES = [(TWO, 2), (FOUR, 4), (SIX, 6), (EIGHT, 8), (TEN, 10)]
 
-    number = models.SmallIntegerField(unique=True, verbose_name="Table Number", validators=[MinValueValidator(1), MaxValueValidator(20)])
+    number = models.SmallIntegerField(
+        unique=True, verbose_name="Table Number", validators=[MinValueValidator(1), MaxValueValidator(20)]
+    )
     capacity = models.SmallIntegerField(verbose_name="Capacity", choices=CAPACITY_CHOICES)
     is_reserved = models.BooleanField(default=False, verbose_name="Is Reserved")
 
@@ -39,12 +41,20 @@ class Reservation(models.Model):
     start_time = models.TimeField(verbose_name="Start Time")
     end_time = models.TimeField(verbose_name="End Time")
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name="reservations", verbose_name="User"
+        User,
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+        related_name="reservations",
+        verbose_name="User",
     )
     user_name = models.CharField(max_length=100, blank=True, null=True, verbose_name="User Name")
     user_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name="User Phone")
     total_persons = models.PositiveIntegerField(
-        verbose_name="Total Persons", choices=TOTAL_PERSONS_CHOICES, validators=[MinValueValidator(1), MaxValueValidator(10)]
+        verbose_name="Total Persons",
+        choices=TOTAL_PERSONS_CHOICES,
+        validators=[MinValueValidator(1), MaxValueValidator(10)],
     )
     is_active = models.BooleanField(default=True, verbose_name="Is Active")
 
@@ -55,7 +65,6 @@ class Reservation(models.Model):
         permissions = [
             ("can_admin_website", "Can administer the website"),
         ]
-
 
     def __str__(self):
         return f"Reservation for {self.user} on {self.date} at {self.start_time}"
