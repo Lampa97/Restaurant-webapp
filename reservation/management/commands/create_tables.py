@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from restaurant.models import Table
 
+
 class Command(BaseCommand):
     help = "Create tables with predefined configurations"
 
