@@ -106,6 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 CSRF_TRUSTED_ORIGINS = [
     f"http://{os.getenv("SERVER_IP")}",
     f"https://{os.getenv("SERVER_IP")}",
+    f"http://localhost/",
+    f"https://localhost/",
 ]
 
 
@@ -226,6 +228,6 @@ if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://localhost:6379/1",
+            "LOCATION": "redis://redis:6379/1",
         }
     }

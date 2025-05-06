@@ -8,12 +8,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv
-RUN pip install --no-cache-dir uv
-
-COPY pyproject.toml uv.lock ./
-
-# Use uv to install dependencies
-RUN uv --no-cache-dir sync
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
 
 COPY . .
