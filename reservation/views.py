@@ -234,7 +234,10 @@ class ReservationStep2View(LoginRequiredMixin, FormView):
         user = self.request.user
         user.had_booked = True
         user.save()
-
+        messages.success(
+            self.request,
+            f"Reservation created successfully: Table № {table.number}, {step1_data['date']}, {step1_data['start_time']} - {step1_data['end_time']}. Total Persons: {step1_data['total_persons']}.",
+        )
         # Clear session data after successful reservation
         del self.request.session["reservation_step1_data"]
 

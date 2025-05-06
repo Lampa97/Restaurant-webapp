@@ -1,11 +1,14 @@
-from datetime import datetime, timedelta
-from django.conf import settings
-from celery import shared_task
-from django.core.mail import send_mail
-from reservation.models import Reservation
 import logging
+from datetime import datetime, timedelta
+
+from celery import shared_task
+from django.conf import settings
+from django.core.mail import send_mail
+
+from reservation.models import Reservation
 
 logger = logging.getLogger(__name__)
+
 
 @shared_task
 def check_booking_status():
@@ -41,12 +44,14 @@ def send_notification_email():
             logger.info(time_difference)
             if timedelta(minutes=59) <= time_difference <= timedelta(hours=2, minutes=1):
                 subject = "Upcoming Reservation Reminder"
-                message = f"Dear {reservation.user},\n\nYour reservation at Iron Hoof SteakHouse is coming up soon!\n\n" \
-                          f"Date: {reservation.date}\n" \
-                          f"Time: {reservation.start_time} - {reservation.end_time}\n\n" \
-                          f"Table № {reservation.table.number}\n" \
-                          f"Total persons: {reservation.total_persons}\n" \
-                          f"Thank you for using our service!"
+                message = (
+                    f"Dear {reservation.user},\n\nYour reservation at Iron Hoof SteakHouse is coming up soon!\n\n"
+                    f"Date: {reservation.date}\n"
+                    f"Time: {reservation.start_time} - {reservation.end_time}\n\n"
+                    f"Table № {reservation.table.number}\n"
+                    f"Total persons: {reservation.total_persons}\n"
+                    f"Thank you for using our service!"
+                )
                 send_mail(
                     subject=subject,
                     message=message,

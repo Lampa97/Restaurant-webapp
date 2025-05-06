@@ -184,6 +184,11 @@ class RegisterView(FormView):
     template_name = "users/register.html"
     success_url = reverse_lazy("restaurant:home")
 
+    def get_success_url(self):
+        messages.success(self.request, "Registration successful. Please check your email to confirm your account. If you don't see the email, please check your spam folder.")
+
+        return reverse_lazy("restaurant:home")
+
     def form_valid(self, form):
         user = form.save()
         user.is_active = False
