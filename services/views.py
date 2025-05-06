@@ -1,11 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.cache import cache
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, TemplateView, UpdateView
 
 from .forms import MealCategoryForm, MealForm
 from .models import Meal, MealCategory

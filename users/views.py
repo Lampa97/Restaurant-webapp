@@ -16,8 +16,13 @@ from django.views.generic.edit import FormView
 
 from reservation.models import Reservation
 
-from .forms import (CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm,
-                    UserUpdateForm)
+from .forms import (
+    CustomLoginForm,
+    CustomUserCreationForm,
+    PasswordResetConfirmForm,
+    PasswordResetRequestForm,
+    UserUpdateForm,
+)
 from .logger import users_logger
 from .models import User
 from .services import get_closest_booking_date
@@ -185,7 +190,11 @@ class RegisterView(FormView):
     success_url = reverse_lazy("restaurant:home")
 
     def get_success_url(self):
-        messages.success(self.request, "Registration successful. Please check your email to confirm your account. If you don't see the email, please check your spam folder.")
+        messages.success(
+            self.request,
+            """Registration successful. Please check your email to confirm your account.
+            If you don't see the email, please check your spam folder.""",
+        )
 
         return reverse_lazy("restaurant:home")
 
