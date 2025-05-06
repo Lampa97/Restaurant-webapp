@@ -9,25 +9,21 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DeleteView, DetailView, ListView, TemplateView, UpdateView, View
-from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from django.views.generic import DeleteView, DetailView, ListView, TemplateView, UpdateView, View
+from django.views.generic.edit import FormView
+
 from reservation.models import Reservation
 
-from .forms import (
-    CustomLoginForm,
-    CustomUserCreationForm,
-    PasswordResetConfirmForm,
-    PasswordResetRequestForm,
-    UserUpdateForm,
-)
+from .forms import (CustomLoginForm, CustomUserCreationForm, PasswordResetConfirmForm, PasswordResetRequestForm,
+                    UserUpdateForm)
 from .logger import users_logger
 from .models import User
 from .services import get_closest_booking_date
 
-
 CACHE_TIMEOUT = settings.CACHE_TIMEOUT if settings.CACHE_ENABLED else 0
+
 
 def email_verification(request, token):
     user = get_object_or_404(User, token=token)
@@ -36,6 +32,7 @@ def email_verification(request, token):
     users_logger.info(f"User {user} confirmed email.")
     messages.success(request, "You successfully confirmed your email. Now you can login.")
     return redirect(reverse("users:login"))
+
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class PersonalCabinetView(LoginRequiredMixin, DetailView):
@@ -96,6 +93,8 @@ class CancelReservationView(LoginRequiredMixin, DeleteView):
         if user_reservations.count() < 1:
             user.had_booked = False
             user.save()
+        return super().delete(request, *args, **kwargs)
+
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class BookingHistoryView(LoginRequiredMixin, ListView):
@@ -110,6 +109,7 @@ class BookingHistoryView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
         return context
+
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class AdminPanelView(PermissionRequiredMixin, TemplateView):
@@ -130,6 +130,7 @@ class ChangeUserStatusView(PermissionRequiredMixin, View):
         users_logger.info(f"User {user} status changed.")
         return redirect("users:all-users")
 
+
 @method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class BookingHistoryAdminView(LoginRequiredMixin, ListView):
     model = Reservation
@@ -144,6 +145,7 @@ class BookingHistoryAdminView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(User, id=self.kwargs["user_id"])
         return context
+
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class UsersListView(PermissionRequiredMixin, ListView):

@@ -23,6 +23,7 @@ dependencies = [
 dev = [
     "colorlog>=6.9.0",
     "ipython>=9.1.0",
+    "pip-tools>=7.4.1",
 ]
 lint = [
     "black>=25.1.0",

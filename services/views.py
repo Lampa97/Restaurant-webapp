@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
-
+from django.core.cache import cache
 from .forms import MealCategoryForm, MealForm
 from .models import Meal, MealCategory
 from .services import MealCategoryService, MealService
@@ -63,6 +63,8 @@ class MealCreateView(PermissionRequiredMixin, CreateView):
     permission_required = "services.can_admin_website"
 
     def get_success_url(self):
+        cache_key = f"meals_in_category_{self.object.category.pk}"
+        cache.delete(cache_key)
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
@@ -73,6 +75,8 @@ class MealUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = "services.can_admin_website"
 
     def get_success_url(self):
+        cache_key = f"meals_in_category_{self.object.category.pk}"
+        cache.delete(cache_key)
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
@@ -82,6 +86,8 @@ class MealDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "services.can_admin_website"
 
     def get_success_url(self):
+        cache_key = f"meals_in_category_{self.object.category.pk}"
+        cache.delete(cache_key)
         return reverse_lazy("services:meal-list", kwargs={"pk": self.object.category.pk})
 
 
@@ -99,21 +105,33 @@ class MealCategoryCreateView(PermissionRequiredMixin, CreateView):
     model = MealCategory
     form_class = MealCategoryForm
     template_name = "services/admin/meal_category_form.html"
-    success_url = reverse_lazy("services:meal-category-list")
     permission_required = "services.can_admin_website"
+
+    def get_success_url(self):
+        cache_key = "categories"
+        cache.delete(cache_key)
+        return reverse_lazy("services:meal-category-list")
 
 
 class MealCategoryUpdateView(PermissionRequiredMixin, UpdateView):
     model = MealCategory
     form_class = MealCategoryForm
     template_name = "services/admin/meal_category_form.html"
-    success_url = reverse_lazy("services:meal-category-list")
     permission_required = "services.can_admin_website"
+
+    def get_success_url(self):
+        cache_key = "categories"
+        cache.delete(cache_key)
+        return reverse_lazy("services:meal-category-list")
 
 
 class MealCategoryDeleteView(PermissionRequiredMixin, DeleteView):
     model = MealCategory
     template_name = "services/admin/meal_category_delete.html"
-    success_url = reverse_lazy("services:meal-category-list")
     context_object_name = "category"
     permission_required = "services.can_admin_website"
+
+    def get_success_url(self):
+        cache_key = "categories"
+        cache.delete(cache_key)
+        return reverse_lazy("services:meal-category-list")

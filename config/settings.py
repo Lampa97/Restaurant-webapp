@@ -138,6 +138,10 @@ CELERY_BEAT_SCHEDULE = {
         "task": "reservation.tasks.check_booking_status",
         "schedule": timedelta(minutes=1),
     },
+    "send_notification_email": {
+        "task": "reservation.tasks.send_notification_email",
+        "schedule": timedelta(minutes=1),
+    },
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
