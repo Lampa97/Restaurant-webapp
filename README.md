@@ -143,30 +143,31 @@ CELERY_RESULT_BACKEND=redis://redis:6379/1
 2. **Create a `.env` File**:
    Copy the example above and save it as `.env` in the project root.
 
-3. **Apply Migrations**:
-   ```bash
-   python manage.py migrate
-   ```
-
-4. **Create a Superuser**:
-   ```bash
-    python manage.py createadmin (set your own credentials in createadmin.py file in users/management/commands)
-   ```
-
-5. **Create a Manager group**:
-   ```bash
-   python manage.py create_managers_group
-   ```
-
-6. **Create a restaurant tables set**:
-   ```bash
-   python manage.py create_tables
-   ```
-   
-7. **Build and Start Docker Containers**:
+3. **Build and Start Docker Containers**:
    ```bash
    docker-compose up -d --build
    ```
+
+4. **Apply Migrations**:
+   ```bash
+   docker-compose exec backend python manage.py migrate
+   ```
+
+5. **Create a Superuser**:
+   ```bash
+   docker-compose exec backend python manage.py createadmin
+   ```
+
+6. **Create a Manager group**:
+   ```bash
+   docker-compose exec backend python manage.py create_managers_group
+   ```
+
+7. **Create a restaurant tables set**:
+   ```bash
+   docker-compose exec backend python manage.py create_tables
+   ```
+```
 
 ---
 
