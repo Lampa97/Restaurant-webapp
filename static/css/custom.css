@@ -1,0 +1,99 @@
+/* Custom background and text colors */
+.custom-bg {
+    background-color: #4E342E; /* Dark Brown */
+}
+
+.custom-text {
+    color: #FFD700; /* Gold */
+}
+
+/* Navbar customization */
+.navbar-custom {
+    background-color: #4E342E;
+    border-color: #FFD700;
+}
+
+/* Button customization */
+.btn-custom {
+    background-color: #FFD700;
+    color: #4E342E;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #8B0000; /* Deep Red */
+    color: #FFF;
+}
+
+* Carousel Styling */
+.carousel-inner {
+  height: 300px;
+}
+
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.carousel-item h5 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.carousel-item p {
+  font-size: 1.2rem;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* Makes the icons white */
+}
+
+/* Card Styling */
+.card {
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+/* Form Styling */
+form {
+  background-color: #343a40;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+form .btn-primary {
+  background-color: #007bff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+form .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* General Styling */
+h1, h2, h3 {
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+hr {
+  border: 5px solid white;
+  margin: 20px 0;
+}

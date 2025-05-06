@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Personal Cabinet {% endblock %}
+
+{% block content %}
+{% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+<h2 class="text-center text-warning">Personal Cabinet</h2>
+<div class="d-flex justify-content-center align-items-center">
+
+    <div class="card bg-dark text-light" style="width: 26rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Name: {{ user.full_name }}</h5>
+            <h6 class="card-subtitle mb-3">Email: {{ user.email }}</h6>
+            <p class="card-text mb-3">Phone number: {{user.phone_number}}</p>
+            {% if closest_booking_date %}
+            <p class="card-text text-success mb-3">Nearest booking date: {{ closest_booking_date }}</p>
+            {% else %}
+            <p class="card-text mb-3">You have no current bookings</p>
+            {% endif %}
+            <a href="{% url 'users:user-profile-update' user.pk %}" class="card-link">Update profile</a>
+            <a href="{% url 'users:user-reservations' %}" class="card-link">Current bookings</a>
+            <a href="{% url 'users:booking-history' %}" class="card-link">Booking history</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

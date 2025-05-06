@@ -1,16 +1,17 @@
 from django.contrib import admin
 
-from .models import Table, Reservation
+from .models import Reservation, Table
 
 
 @admin.register(Table)
 class CategoryTable(admin.ModelAdmin):
-    list_display = ("number", "capacity", "location")
-    search_fields = ("number", "capacity", "location")
-    list_filter = ("location", "capacity",)
+    list_display = ("number", "capacity")
+    search_fields = ("number", "capacity")
+    list_filter = ("capacity",)
+
 
 @admin.register(Reservation)
 class CategoryReservation(admin.ModelAdmin):
-    list_display = ("table", "customer", "date", "start_time", "end_time", "total_persons")
-    search_fields = ("table", "customer", "date", "start_time", "end_time", "total_persons")
-    list_filter = ("customer", "date", "start_time", "end_time", "total_persons")
+    list_display = ("table", "user", "date", "start_time", "end_time", "total_persons", "is_active")
+    search_fields = ("table", "user", "date", "start_time", "end_time", "total_persons")
+    list_filter = ("user", "date", "start_time", "end_time", "total_persons", "is_active")

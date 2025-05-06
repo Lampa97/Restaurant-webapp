@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block title %} User Booking History {% endblock %}
+
+{% block content %}
+
+<h2 class="text-center text-warning">{{user}} Booking history</h2>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% if reservations %}
+    {% for reservation in reservations %}
+
+    <div class="col">
+        <div class="card border-dark bg-dark text-light">
+            <div class="card-body">
+                <h5 class="card-title">{{ reservation.table }}</h5>
+                <p class="card-text">Total persons: {{ reservation.total_persons }}</p>
+                <div class="card-footer">
+                    <small class="text-body-light fst-italic text-info">Reservation date and time:
+                        <p>{{ reservation.date }}: {{reservation.start_time}}-{{reservation.end_time}}
+                        <p/>
+                    </small>
+                    {% if reservation.is_active %}
+                    <p class="text-body-light fst-italic text-success">Status: Active</p>
+                    {% else %}
+                    <small class="text-body-light fst-italic text-danger">Status: Finished</small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="d-flex justify-content-center align-items-center w-100">
+    <h4 class="text-center text-danger">No previous reservations found</h4>
+</div>
+{% endif %}
+</div>
+{% endblock %}

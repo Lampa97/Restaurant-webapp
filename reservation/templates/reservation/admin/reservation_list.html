@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block title %} Reservation List {% endblock %}
+
+{% block content %}
+
+<h2 class="text-center text-warning">Reservations</h2>
+<div class="d-flex justify-content-center align-items-center">
+
+    <a href="{% url 'reservation:reservation-step1' %}" class="btn btn-success">Create a reservation</a>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for reservation in reservations %}
+
+    <div class="col">
+        <div class="card border-dark bg-dark text-light">
+            <div class="card-body">
+                <h5 class="card-title">{{ reservation.table }}</h5>
+                <p class="card-text">Name: {{ reservation.user_name }}</p>
+                <p class="card-text">Phone number: {{ reservation.user_phone }}</p>
+                <p class="card-text">Total persons: {{ reservation.total_persons }}</p>
+                <div class="card-footer">
+                    <small class="text-body-light fst-italic text-info">Reservation date and time:
+                        <p>{{ reservation.date }}: {{reservation.start_time}}-{{reservation.end_time}}
+                        <p/>
+                    </small>
+                    {% if reservation.is_active %}
+                    <p class="text-body-light fst-italic text-success">Status: Active</p>
+                    {% else %}
+                    <small class="text-body-light fst-italic text-danger">Status: Finished</small>
+                    {% endif %}
+                </div>
+                <a href="{% url 'reservation:reservation-update-step1' reservation.pk %}"
+                   class="btn btn-info">Update</a>
+                <a href="{% url 'reservation:reservation-delete' reservation.pk %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
