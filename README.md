@@ -124,7 +124,9 @@ EMAIL_PORT=587
 EMAIL_HOST_USER=your-email@gmail.com
 EMAIL_HOST_PASSWORD=your-email-password
 
-SERVER_IP=your-server-ip
+SERVER_IP=your-server-ip (optional)
+
+DOMAIN_NAME=your-domain-name (optional)
 
 CELERY_BROKER_URL=redis://redis:6379/1
 CELERY_RESULT_BACKEND=redis://redis:6379/1
