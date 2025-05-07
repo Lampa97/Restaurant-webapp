@@ -106,6 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 CSRF_TRUSTED_ORIGINS = [
     f"http://{os.getenv("SERVER_IP")}",
     f"https://{os.getenv("SERVER_IP")}",
+    f"http://{os.getenv("DOMAIN_NAME")}",
+    f"https://{os.getenv("DOMAIN_NAME")}",
     "http://localhost",
     "https://localhost",
 ]
