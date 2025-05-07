@@ -68,14 +68,7 @@ jobs:
             mkdir static
             fi
           
-            if [ -d "media" ]; then
-            echo "Media folder exists."
-            else
-            echo "Media folder does not exist. Creating it now."
-            mkdir media
-            fi
                              
-        
             echo "Step 3: Running docker commands on the remote server"
             docker --version
             docker compose version
@@ -83,7 +76,7 @@ jobs:
             sudo systemctl enable docker
             sudo sysctl vm.overcommit_memory=1
             sudo docker compose down || true
-            sudo docker compose up -d --build
+            sudo docker compose up --build
             EOF
           
 
