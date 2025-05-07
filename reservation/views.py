@@ -15,7 +15,6 @@ from .models import Reservation, Table
 CACHE_TIMEOUT = settings.CACHE_TIMEOUT if settings.CACHE_ENABLED else 0
 
 
-
 class TableListView(PermissionRequiredMixin, ListView):
     model = Table
     template_name = "reservation/admin/table_list.html"
