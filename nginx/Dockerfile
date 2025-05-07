@@ -10,4 +10,4 @@ RUN mkdir -p /code/media/meals
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
+EXPOSE 8080
