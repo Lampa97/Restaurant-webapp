@@ -110,6 +110,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://localhost",
 ]
 
+SERVER_IP = os.getenv("SERVER_IP")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -228,6 +229,6 @@ if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://redis:6379/1",
+            "LOCATION": "redis://localhost:6379/1",
         }
     }

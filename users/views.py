@@ -206,6 +206,8 @@ class RegisterView(FormView):
         user.save()
         users_logger.info(f"User {user} registered.")
         host = self.request.get_host()
+        if host.startswith("django"):
+            host = settings.SERVER_IP
         url = f"http://{host}/users/email-confirm/{token}/"
         send_mail(
             subject="Email confirmation",
