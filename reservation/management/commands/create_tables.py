@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from restaurant.models import Table
+from reservation.models import Table
 
 
 class Command(BaseCommand):
