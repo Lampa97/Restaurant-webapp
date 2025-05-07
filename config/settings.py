@@ -138,11 +138,11 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULE = {
     "check_booking_status": {
         "task": "reservation.tasks.check_booking_status",
-        "schedule": timedelta(minutes=1),
+        "schedule": timedelta(hours=1),
     },
     "send_notification_email": {
         "task": "reservation.tasks.send_notification_email",
-        "schedule": timedelta(minutes=1),
+        "schedule": timedelta(hours=1),
     },
 }
 

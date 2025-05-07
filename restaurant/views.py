@@ -32,7 +32,6 @@ class AboutView(TemplateView):
         return context
 
 
-@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class ServiceListView(PermissionRequiredMixin, ListView):
     model = Service
     template_name = "restaurant/admin/service_list.html"
@@ -63,7 +62,6 @@ class ServiceDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "restaurant.can_admin_website"
 
 
-@method_decorator(cache_page(CACHE_TIMEOUT), name="dispatch")
 class PersonnelListView(PermissionRequiredMixin, ListView):
     model = Personnel
     template_name = "restaurant/admin/personnel_list.html"

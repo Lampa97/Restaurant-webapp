@@ -67,6 +67,13 @@ jobs:
             echo "Static folder does not exist. Creating it now."
             mkdir static
             fi
+          
+            if [ -d "media" ]; then
+            echo "Media folder exists."
+            else
+            echo "Media folder does not exist. Creating it now."
+            mkdir media
+            fi
                              
         
             echo "Step 3: Running docker commands on the remote server"
