@@ -1,16 +1,13 @@
 from django.test import TestCase
-from restaurant.models import Review, Personnel, Service
-from restaurant.forms import ReviewForm, PersonnelForm, ServiceForm
+
+from restaurant.forms import PersonnelForm, ReviewForm, ServiceForm
+from restaurant.models import Personnel, Review, Service
 
 
 # Model Tests
 class TestReviewModel(TestCase):
     def setUp(self):
-        self.review = Review.objects.create(
-            name="John Doe",
-            review_text="Great service!",
-            rating=5
-        )
+        self.review = Review.objects.create(name="John Doe", review_text="Great service!", rating=5)
 
     def test_review_creation(self):
         self.assertEqual(self.review.name, "John Doe")

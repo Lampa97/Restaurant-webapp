@@ -1,21 +1,21 @@
-from django.test import TestCase, SimpleTestCase
-from unittest.mock import patch, MagicMock
-from datetime import datetime, timedelta, time, date
-from reservation.tasks import check_booking_status, send_notification_email
-from reservation.models import Reservation, Table
-from django.urls import reverse, resolve
-from reservation.forms import ReservationStep1Form, ReservationStep2Form, TableForm
-from django.core.mail import send_mail
-from reservation import views
-import os
+from datetime import date, datetime, time, timedelta
+from unittest.mock import MagicMock, patch
+
+from django.test import SimpleTestCase, TestCase
+from django.urls import resolve, reverse
 from dotenv import load_dotenv
+
+from reservation import views
+from reservation.forms import ReservationStep1Form, ReservationStep2Form, TableForm
+from reservation.models import Reservation, Table
+from reservation.tasks import check_booking_status
 
 load_dotenv()
 
 
 class TestReservationTasks(TestCase):
 
-    @patch('reservation.tasks.Reservation.objects.filter')
+    @patch("reservation.tasks.Reservation.objects.filter")
     def test_check_booking_status(self, mock_filter):
         # Mock reservations
         mock_reservation = MagicMock()
@@ -34,14 +34,14 @@ class TestReservationTasks(TestCase):
 
 class TestReservationModel(TestCase):
 
-    @patch('reservation.models.Reservation.save')
+    @patch("reservation.models.Reservation.save")
     def test_reservation_model(self, mock_save):
         # Create a mock reservation
         reservation = Reservation(
             date=datetime.now().date(),
             start_time=datetime.now().time(),
             end_time=(datetime.now() + timedelta(hours=1)).time(),
-            is_active=True
+            is_active=True,
         )
         reservation.save()
 
@@ -51,9 +51,8 @@ class TestReservationModel(TestCase):
 
 class TestReservationURLs(SimpleTestCase):
     def test_reservation_list_url(self):
-        url = reverse('reservation:reservation-list')
+        url = reverse("reservation:reservation-list")
         self.assertEqual(resolve(url).func.view_class, views.ReservationAdminListView)
-
 
 
 class TestTableForm(TestCase):
@@ -150,7 +149,4 @@ class TestReservationStep2Form(TestCase):
         )
         self.assertFalse(form.is_valid())
         self.assertIn("__all__", form.errors)
-        self.assertIn(
-            "The selected table is already booked from",
-            form.errors["__all__"][0]
-        )
+        self.assertIn("The selected table is already booked from", form.errors["__all__"][0])

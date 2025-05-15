@@ -1,12 +1,14 @@
+from datetime import date, timedelta
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth import get_user_model
-from reservation.models import Reservation, Table
-from datetime import date, timedelta
-from django.contrib.auth.models import Group, Permission
 
+from reservation.models import Reservation, Table
 
 User = get_user_model()
+
 
 class TestUsersViews(TestCase):
     def setUp(self):
@@ -35,7 +37,11 @@ class TestUsersViews(TestCase):
 
         # Add admin_user to a group with required permissions
         managers_group, created = Group.objects.get_or_create(name="Manager")
-        permissions = Permission.objects.filter(codename__in=["can_admin_website",])
+        permissions = Permission.objects.filter(
+            codename__in=[
+                "can_admin_website",
+            ]
+        )
         managers_group.permissions.add(*permissions)
         managers_group.user_set.add(self.admin_user)
 
