@@ -2,7 +2,7 @@ import logging
 import os
 from datetime import timedelta
 from pathlib import Path
-
+import sys
 import colorlog
 from dotenv import load_dotenv
 
@@ -232,5 +232,13 @@ if CACHE_ENABLED:
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": "redis://redis:6379/1",
+        }
+    }
+
+if "test" in sys.argv:
+    CACHE_ENABLED = False
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         }
     }

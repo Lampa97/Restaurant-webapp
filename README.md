@@ -18,7 +18,8 @@ This project is a **Restaurant Reservation System** built with **Django**. It al
 7. [Features](#features)
 8. [Static and Media Files](#static-and-media-files)
 9. [Logging](#logging)
-10. [License](#license)
+10. [Tests](#tests)
+11. [License](#license)
 
 ---
 
@@ -228,6 +229,13 @@ The project uses `colorlog` for enhanced logging. Logs are displayed in the cons
 - **CRITICAL**: Bold Red
 
 ---
+
+## Tests
+The project includes unit tests for various components. To run the tests, use the following command:
+
+```bash
+ python manage.py test
+```
 
 ## License
 
