@@ -18,7 +18,8 @@ class TestReservationTasks(TestCase):
     Tests for reservation-related tasks.
 
     Methods:
-        test_check_booking_status(): Tests the `check_booking_status` task to ensure it deactivates expired reservations.
+        test_check_booking_status(): Tests the `check_booking_status` task to ensure it deactivates
+        expired reservations.
     """
 
     @patch("reservation.tasks.Reservation.objects.filter")

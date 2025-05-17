@@ -7,6 +7,13 @@ from .models import Reservation, Table
 
 
 class TableForm(forms.ModelForm):
+    """
+    Form for managing table data.
+
+    Fields:
+        number (int): The table number.
+        capacity (int): The seating capacity of the table.
+    """
     number = forms.ChoiceField(
         widget=forms.Select(
             attrs={
@@ -40,6 +47,17 @@ class TableForm(forms.ModelForm):
 
 
 class ReservationStep1Form(forms.ModelForm):
+    """
+    Form for the first step of making a reservation.
+
+    Fields:
+        date (date): The date of the reservation.
+        start_time (time): The start time of the reservation.
+        end_time (time): The end time of the reservation.
+        total_persons (int): The number of people for the reservation.
+        user_name (str): The name of the user making the reservation.
+        user_phone (str): The phone number of the user.
+    """
     class Meta:
         model = Reservation
         fields = ["date", "start_time", "end_time", "total_persons", "user_name", "user_phone"]
@@ -137,6 +155,12 @@ class ReservationStep1Form(forms.ModelForm):
 
 
 class ReservationStep2Form(forms.ModelForm):
+    """
+    Form for the second step of making a reservation.
+
+    Fields:
+        table (Table): The table selected for the reservation.
+    """
     table = forms.ModelChoiceField(
         queryset=Table.objects.none(),
         widget=forms.Select(attrs={"class": "form-control", "style": "background-color: #f5deb3;"}),

@@ -226,7 +226,7 @@ LOGOUT_REDIRECT_URL = "restaurant:home"
 
 CACHE_ENABLED = True
 
-CACHE_TIMEOUT = 60 * 1  # 15 minutes
+CACHE_TIMEOUT = 60 * 1  # 1 minute
 
 if CACHE_ENABLED:
     CACHES = {
