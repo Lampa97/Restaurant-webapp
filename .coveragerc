@@ -10,8 +10,9 @@ omit =
     *wsgi*
     *admin.py
     *urls.py
-    */settings/*
+    *settings.py*
     */management/*
+    */templatetags/*
 
 
 [report]
@@ -25,8 +26,9 @@ omit =
     *wsgi*
     *admin.py
     *urls.py
-    */settings/*
+    *settings.py*
     */management/*
+    */templatetags/*
 
 fail_under = 75
 show_missing = True

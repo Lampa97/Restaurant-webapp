@@ -14,6 +14,12 @@ load_dotenv()
 
 
 class TestReservationTasks(TestCase):
+    """
+    Tests for reservation-related tasks.
+
+    Methods:
+        test_check_booking_status(): Tests the `check_booking_status` task to ensure it deactivates expired reservations.
+    """
 
     @patch("reservation.tasks.Reservation.objects.filter")
     def test_check_booking_status(self, mock_filter):
@@ -33,6 +39,12 @@ class TestReservationTasks(TestCase):
 
 
 class TestReservationModel(TestCase):
+    """
+    Tests for the Reservation model.
+
+    Methods:
+        test_reservation_model(): Tests the `save` method of the Reservation model.
+    """
 
     @patch("reservation.models.Reservation.save")
     def test_reservation_model(self, mock_save):
@@ -50,12 +62,24 @@ class TestReservationModel(TestCase):
 
 
 class TestReservationURLs(SimpleTestCase):
+    """
+    Tests for reservation-related URLs.
+
+    Methods:
+        test_reservation_list_url(): Tests the URL resolution for the reservation list view.
+    """
     def test_reservation_list_url(self):
         url = reverse("reservation:reservation-list")
         self.assertEqual(resolve(url).func.view_class, views.ReservationAdminListView)
 
 
 class TestTableForm(TestCase):
+    """
+    Tests for the TableForm.
+
+    Methods:
+        test_table_form_available_numbers(): Tests the availability of table numbers in the form.
+    """
     def setUp(self):
         # Create some tables in the database
         Table.objects.create(number=1, capacity=4)
@@ -70,6 +94,14 @@ class TestTableForm(TestCase):
 
 
 class TestReservationStep1Form(TestCase):
+    """
+    Tests for the ReservationStep1Form.
+
+    Methods:
+        test_valid_reservation_step1_form(): Tests the form with valid data.
+        test_invalid_start_time(): Tests the form with an invalid start time.
+        test_invalid_end_time(): Tests the form with an invalid end time.
+    """
     def test_valid_reservation_step1_form(self):
         form_data = {
             "date": date.today(),
@@ -112,6 +144,13 @@ class TestReservationStep1Form(TestCase):
 
 
 class TestReservationStep2Form(TestCase):
+    """
+    Tests for the ReservationStep2Form.
+
+    Methods:
+        test_valid_reservation_step2_form(): Tests the form with valid data.
+        test_overlapping_reservation(): Tests the form with overlapping reservation data.
+    """
     def setUp(self):
         # Create a table and a reservation
         self.table = Table.objects.create(number=1, capacity=4)

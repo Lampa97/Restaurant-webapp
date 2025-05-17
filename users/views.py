@@ -247,6 +247,13 @@ class PasswordResetRequestView(View):
 
 
 class PasswordResetConfirmView(View):
+    """
+    Handles password reset confirmation for users.
+
+    Methods:
+        get(request, token): Renders the password reset confirmation form.
+        post(request, token): Processes the password reset form and updates the user's password.
+    """
 
     def get(self, request, token):
         user = get_object_or_404(User, password_reset_token=token)
