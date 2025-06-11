@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg bg-dark border-body sticky-top" data-bs-theme="dark">
     <div class="container-fluid d-flex justify-content-between">
-        <a class="navbar-brand d-flex align-items-center" href="restaurant:home">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'restaurant:home' %}">
             <img src="{% static 'images/buffalo.png' %}" alt="Logo" width="100" height="100"
                  class="d-inline-block align-text-center">
             Iron Hoof SteakHouse
@@ -56,21 +56,21 @@
             <li class="nav-item">
                 <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit" class="p-2 btn btn-outline-danger">Logout</button>
+                    <button type="submit" class="p-2 btn btn-danger">Logout</button>
                 </form>
             </li>
 
             {% else %}
-            <li class="nav-item">
+            <li class="nav-item me-2">
                 <form method="post" action="{% url 'users:login' %}" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit" class="p-2 btn btn-outline-info">Login</button>
+                    <button type="submit" class="p-2 btn btn-info">Login</button>
                 </form>
             </li>
             <li class="nav-item">
                 <form method="post" action="{% url 'users:register' %}" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit" class="p-2 btn btn-outline-info">Sign up</button>
+                    <button type="submit" class="p-2 btn btn-info">Sign up</button>
                 </form>
             </li>
             {% endif %}

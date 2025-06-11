@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -106,8 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
 CSRF_TRUSTED_ORIGINS = [
     f"http://{os.getenv("SERVER_IP")}",
     f"https://{os.getenv("SERVER_IP")}",
+    f"http://{os.getenv("DOMAIN_NAME")}",
+    f"https://{os.getenv("DOMAIN_NAME")}",
+    "http://localhost",
+    "https://localhost",
 ]
 
+SERVER_IP = os.getenv("SERVER_IP")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -136,11 +142,11 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULE = {
     "check_booking_status": {
         "task": "reservation.tasks.check_booking_status",
-        "schedule": timedelta(minutes=1),
+        "schedule": timedelta(hours=1),
     },
     "send_notification_email": {
         "task": "reservation.tasks.send_notification_email",
-        "schedule": timedelta(minutes=1),
+        "schedule": timedelta(hours=1),
     },
 }
 
@@ -220,12 +226,20 @@ LOGOUT_REDIRECT_URL = "restaurant:home"
 
 CACHE_ENABLED = True
 
-CACHE_TIMEOUT = 60 * 15  # 15 minutes
+CACHE_TIMEOUT = 60 * 1  # 1 minute
 
 if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://localhost:6379/1",
+            "LOCATION": "redis://redis:6379/1",
+        }
+    }
+
+if "test" in sys.argv:
+    CACHE_ENABLED = False
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         }
     }

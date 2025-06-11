@@ -1,0 +1,35 @@
+[run]
+source = '.'
+omit =
+    *tests*
+    *apps.py
+    *manage.py
+    *__init__.py
+    *migrations*
+    *asgi*
+    *wsgi*
+    *admin.py
+    *urls.py
+    *settings.py*
+    */management/*
+    */templatetags/*
+
+
+[report]
+omit =
+    *tests*
+    *apps.py
+    *manage.py
+    *__init__.py
+    *migrations*
+    *asgi*
+    *wsgi*
+    *admin.py
+    *urls.py
+    *settings.py*
+    */management/*
+    */templatetags/*
+
+fail_under = 75
+show_missing = True
+skip_covered = True

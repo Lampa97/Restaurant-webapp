@@ -26,6 +26,7 @@
             {{ form.password }}
         </div>
         <button class="btn btn-success w-100" type="submit">Login</button>
+        <p><a href="{% url 'users:reset-password' %}" class="link-info">Forgot password?</a></p>
     </form>
 </div>
 {% endblock %}

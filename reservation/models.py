@@ -5,6 +5,13 @@ from users.models import User
 
 
 class Table(models.Model):
+    """
+    Represents a table in the restaurant.
+
+    Attributes:
+        number (int): The table number.
+        capacity (int): The seating capacity of the table.
+    """
     TWO = 2
     FOUR = 4
     SIX = 6
@@ -32,6 +39,19 @@ class Table(models.Model):
 
 
 class Reservation(models.Model):
+    """
+    Represents a reservation for a table.
+
+    Attributes:
+        table (Table): The table associated with the reservation.
+        date (date): The date of the reservation.
+        start_time (time): The start time of the reservation.
+        end_time (time): The end time of the reservation.
+        total_persons (int): The number of people for the reservation.
+        user_name (str): The name of the user making the reservation.
+        user_phone (str): The phone number of the user.
+        is_active (bool): Indicates if the reservation is active.
+    """
 
     TOTAL_PERSONS_CHOICES = [(i, i) for i in range(1, 11)]
 

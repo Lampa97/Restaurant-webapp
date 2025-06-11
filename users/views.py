@@ -166,7 +166,7 @@ class UsersListView(PermissionRequiredMixin, ListView):
         page_obj = paginator.get_page(page_number)
 
         for user in page_obj:
-            reservation = Reservation.objects.filter(user=user).first()
+            reservation = Reservation.objects.filter(user=user, is_active=True).first()
             user.table = reservation.table if reservation else None
             user.reservation_date = reservation.date if reservation else None
 
@@ -206,6 +206,8 @@ class RegisterView(FormView):
         user.save()
         users_logger.info(f"User {user} registered.")
         host = self.request.get_host()
+        if host.startswith("django"):
+            host = settings.SERVER_IP
         url = f"http://{host}/users/email-confirm/{token}/"
         send_mail(
             subject="Email confirmation",
@@ -245,6 +247,13 @@ class PasswordResetRequestView(View):
 
 
 class PasswordResetConfirmView(View):
+    """
+    Handles password reset confirmation for users.
+
+    Methods:
+        get(request, token): Renders the password reset confirmation form.
+        post(request, token): Processes the password reset form and updates the user's password.
+    """
 
     def get(self, request, token):
         user = get_object_or_404(User, password_reset_token=token)

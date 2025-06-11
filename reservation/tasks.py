@@ -13,7 +13,9 @@ logger = logging.getLogger(__name__)
 @shared_task
 def check_booking_status():
     """
-    Check the status of each reservation and changing status to inactive when the reservation is over.
+    Task to deactivate expired reservations.
+
+    Deactivates reservations where the end time has passed and the reservation is still active.
     """
     today_date = datetime.now().date()
     reservations = Reservation.objects.filter(is_active=True, date__lte=today_date)
