@@ -1,0 +1,81 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg bg-dark border-body sticky-top" data-bs-theme="dark">
+    <div class="container-fluid d-flex justify-content-between">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'restaurant:home' %}">
+            <img src="{% static 'images/buffalo.png' %}" alt="Logo" width="100" height="100"
+                 class="d-inline-block align-text-center">
+            Iron Hoof SteakHouse
+        </a>
+        <ul class="nav justify-content-center">
+            <li class="nav-item p-2">
+                <a class="navbar-brand" href="{% url 'restaurant:home' %}">Home</a>
+            </li>
+            <li class="nav-item p-2">
+                <a class="navbar-brand" href="{% url 'restaurant:about' %}">About us</a>
+            </li>
+            <li class="nav-item dropdown p-2">
+                <a class="nav-link link-light dropdown-toggle p-0" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">
+                    <span class="fs-5">Services</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'services:menu' %}">Menu</a></li>
+                    <li><a class="dropdown-item" href="{% url 'services:delivery' %}">Food Delivery</a></li>
+                    <li><a class="dropdown-item" href="{% url 'services:banquet' %}">Banquet</a></li>
+                    <li><a class="dropdown-item" href="{% url 'services:tour' %}">Guided Farm Tour</a></li>
+                </ul>
+            </li>
+
+
+            <li class="nav-item p-0">
+                <button type="button" class="btn btn-warning">
+                    <a class="navbar-brand text-dark" href="{% url 'reservation:reservation-step1' %}">Book a table</a>
+                </button>
+            </li>
+
+
+        </ul>
+
+
+        <ul class="nav justify-content-end">
+
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <h4 class="text-warning px-3">Welcome, {{ user.full_name }}!</h4>
+            </li>
+            {% if user.is_staff %}
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'users:admin' %}">Admin</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'users:personal-cabinet' user.pk %}">Personal cabinet</a>
+            </li>
+
+            <li class="nav-item">
+                <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 btn btn-danger">Logout</button>
+                </form>
+            </li>
+
+            {% else %}
+            <li class="nav-item me-2">
+                <form method="post" action="{% url 'users:login' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 btn btn-info">Login</button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form method="post" action="{% url 'users:register' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 btn btn-info">Sign up</button>
+                </form>
+            </li>
+            {% endif %}
+        </ul>
+
+
+    </div>
+</nav>

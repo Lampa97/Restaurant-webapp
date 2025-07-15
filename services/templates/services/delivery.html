@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Food Delivery{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-warning text-decoration-underline fst-italic">Food Delivery</h1>
+<div class="card mb-3 bg-dark text-light">
+    <img src="{% static 'images/delivery_intro.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h3 class="card-title text-center fst-italic">Fresh, Fast & Delivered to You</h3>
+        <p class="card-text text-center">Enjoy your favorite dishes from the comfort of home. We prepare every meal fresh and deliver it hot — quickly, safely, and with care.</p>
+        <h4 class="card-text text-center fst-italic"> Main features:</h4>
+        <div class="d-flex justify-content-center">
+            <ul class="list-group w-25 text-center list-group-flush">
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🚚 Quick delivery within 45 minutes</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">📱 Easy online ordering</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🥗 Made-to-order meals</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">💳 Secure payments</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">📍 Available in select areas</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

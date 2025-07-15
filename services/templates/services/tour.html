@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Farm Tour{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-warning text-decoration-underline fst-italic">Guided Farm Tour</h1>
+<div class="card mb-3 bg-dark text-light">
+    <img src="{% static 'images/tour_intro.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h3 class="card-title text-center fst-italic">Experience the Farm Life</h3>
+        <p class="card-text text-center">Join us for a relaxing and educational farm tour. Great for families, schools, and nature lovers who want to learn more about where their food comes from.</p>
+        <h4 class="card-text text-center fst-italic"> Main features:</h4>
+        <div class="d-flex justify-content-center">
+            <ul class="list-group w-25 text-center list-group-flush">
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🐄 Meet and feed farm animals</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🥕 Pick your own fruits and vegetables</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">🌿 Learn about sustainable farming</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">📷 Beautiful photo spots</li>
+                <li class="list-group-item bg-dark text-light border-warning fst-italic">👨‍🌾 Guided by friendly staff</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

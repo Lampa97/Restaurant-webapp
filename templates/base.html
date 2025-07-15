@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+
+</head>
+<body class="bg-image d-flex flex-column vh-100"
+      style="background-image: url('/static/images/background.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
+{% include "restaurant/includes/header.html" %}
+<main class="flex-grow-1 pb-5">
+    <div class="container">
+
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</main>
+{% include "restaurant/includes/footer.html" %}
+<script type="text/javascript" src="/static/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>
+
+<style>
+    html {
+  scroll-padding-top: 175px; /* Adjust this value to match your sticky header's height */
+}
+</style>
