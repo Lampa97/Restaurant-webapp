@@ -56,7 +56,7 @@ jobs:
             
             echo "Step 1: Pulling the latest code from the repository"
             cd Restaurant-webapp
-            sudo git checkout feature_3
+            sudo git checkout develop
             sudo git pull
                     
             echo "Step 2: Creating static folder"
